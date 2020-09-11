@@ -38,7 +38,7 @@ class EventSOController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','report','export','tampil','exportExcel'),
+				'actions'=>array('admin','delete','report','export','tampil','exportExcel','report1'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -157,30 +157,6 @@ class EventSOController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 
-	// 	$this->widget('ext.EExcelView', array(
-	// 		'grid_mode'=>'export',
-	// 		'title' => 'Daftar SO',
-	// 	'dataProvider' => $dataProvider,
-	// 	//'filter' => $model,
-	// 	'columns' => array(
-	// 		'id_so',
-	// 		'id_apotek',
-	// 		'tgl_mulai',
-	// 		'tgl_berakhir',
-	// 	),
-	// ));
-		// $sql = "select * from tbl_event_so";
-		// $dataProvider= new CSqlDataProvider($sql,array(
-		// 	'keyField'=> 'id_so',
-		// ));
-		// $this->render('index',array(
-		// 	'dataProvider'=>$dataProvider,
-		// ));
-		// $dataProvider=new CActiveDataProvider('EventSO');
-		// $this->render('index',array(
-		// 	'dataProvider'=>$dataProvider,
-		// ));
-		
 	}
 	
 
@@ -244,13 +220,23 @@ class EventSOController extends Controller
 		
 	}
 
+	public function actionReport1()
+	{
+		$model=new EventSO('getTes');
+		
+		$this->render('report1', array(
+			'model'=>$model,
+		));
+	}
+
+
 	public function actionExportExcel(){
 		$model = new EventSO();
 		$this->widget('ext.EExcelView', array(
 			'grid_mode'=>'export',
 			'title' => 'Daftar SO',
-		'dataProvider' =>$dataProvider1,
-		'filter' => $model,
+		'dataProvider' =>$model->getTes(),
+	//	'filter' => $model,
 		'columns' => array(
 			'id_so',
 			'id_item',

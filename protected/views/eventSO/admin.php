@@ -40,31 +40,23 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 )); ?>
 </div><!-- search-form -->
 
-
-
-<?php $this->widget('application.extensions.EExcelView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'event-so-grid',
 	'dataProvider'=>$model->search(),
-	'autoWidth'=>true,
-	'template' => "{summary}\n{items}\n{exportbuttons}\n{pager}",
-	'exportType'=>'CSV',
-	'grid_mode' => 'export',
 	'filter'=>$model,
-	'filename'=>'newFile',
 	'columns'=>array(
 		'id_so',
-		'tgl_mulai',
-		'tgl_berakhir',
 		array(
-			'name'=>'total_selisih_item',
-			'header'=>'Se Item',
-			//'value'=>'EventSO::model()->getSelisih()'
-		)
-			
+			'name'=>'id_apotek',
+			'header'=>'Nama Apotek',
+			'value'=>'$this->grid->getController()->getIdApotek($data->id_apotek)'
 		),
+		'tgl_mulai',
+		'tgl_berakhir',		
+	
 		
-		
-		//Pencatatan::model()->getSelisih()
-		
+		array(
+			'class'=>'CButtonColumn',
+		),
+	),
 )); ?>
-

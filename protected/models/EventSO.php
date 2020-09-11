@@ -49,7 +49,7 @@ class EventSO extends CActiveRecord
 		);
 	}
 	public function getTes(){
-		$sql1='SELECT *, jml_stok_tem - jml_stok, (jml_stok_tem - jml_stok)*harga as selisih_harga
+		$sql1='SELECT *, (jml_stok_tem - jml_stok)as ttl_selisih_item, (jml_stok_tem - jml_stok)*harga as selisih_harga
 		FROM
 		(
 		SELECT i.id_item, i.nama_item, SUM(stok) AS jml_stok, harga FROM tbl_dtl_item d
@@ -62,9 +62,9 @@ class EventSO extends CActiveRecord
 		GROUP BY i.id_item) AS yyy 
 		ON xxx.id_item = yyy.id_item ';
 		$dataProvider1=new CSqlDataProvider($sql1, array(
-			'keyField'=>'id_item',
+			'keyField'=>'id_so',
 			'pagination'=>array(
-				'pageSize'=>20,
+				'pageSize'=>25,
 			),
 		));
 		return $dataProvider1;

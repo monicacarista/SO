@@ -56,7 +56,7 @@ $this->menu=array(
 		array(
 			'name'=>'Selisih Total Item',
 			'type'=>'raw',
-			'value'=>'$data["jml_stok_tem - jml_stok"]',
+			'value'=>'$data["ttl_selisih_item"]',
 		),
 		array(
 			'name'=>'Selisih Total Harga',
@@ -79,22 +79,7 @@ $this->menu=array(
 		
 	),
 )); ?>
-<!-- 
-<?php echo CHtml::beginForm(array('eventSO/exportExcel')); ?>
-<?php $model = new EventSO();
-$this->widget('zii.widgets.grid.CGridView', array(
-    'dataProvider' => $dataProvider1,
- //   'filter'=>$model,
-    'columns' => array(
-    'id_so',    'id_item',
-    'nama_item',
-	'jlh_stok',
-	'jlh_stok_temp',
-	'harga',
-	'selisih_total_item',
-	'selisih_total_harga'
-    ),
-));
-?>
-<?php echo CHtml::submitButton('Export'); ?>
-<?php echo CHtml::endForm(); ?> -->
+<?php echo CHtml::beginForm(array('EventSO/report1')); ?>
+
+<?php echo CHtml::submitButton('Export to .csv'); ?>
+
