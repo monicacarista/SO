@@ -13,6 +13,10 @@
 	<?php echo CHtml::encode($data->id_apotek); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('id_apoteker')); ?>:</b>
+	<?php echo CHtml::encode($data->id_apoteker); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('tgl_mulai')); ?>:</b>
 	<?php echo CHtml::encode($data->tgl_mulai); ?>
 	<br />

@@ -82,4 +82,3 @@ $this->menu=array(
 <?php echo CHtml::beginForm(array('EventSO/report1')); ?>
 
 <?php echo CHtml::submitButton('Export to .csv'); ?>
-

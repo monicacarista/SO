@@ -23,6 +23,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'id_so',
 		'id_apotek',
+		'id_apoteker',
 		'tgl_mulai',
 		'tgl_berakhir',
 		'total_selisih_item',

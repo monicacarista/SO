@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'tbl_event_so':
  * @property integer $id_so
  * @property integer $id_apotek
+ * @property integer $id_apoteker
  * @property string $tgl_mulai
  * @property string $tgl_berakhir
  * @property integer $total_selisih_item
@@ -30,10 +31,10 @@ class EventSO extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id_apotek, tgl_mulai, tgl_berakhir', 'required'),
-			array('id_apotek, total_selisih_item', 'numerical', 'integerOnly'=>true),
+			array('id_apotek, id_apoteker, total_selisih_item', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_so, id_apotek, tgl_mulai, tgl_berakhir, total_selisih_item', 'safe', 'on'=>'search'),
+			array('id_so, id_apotek, id_apoteker, tgl_mulai, tgl_berakhir, total_selisih_item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,6 +71,20 @@ class EventSO extends CActiveRecord
 		return $dataProvider1;
 	}
 
+	// public function getReportIDSO()
+	// {
+	// 	$sql1='SELECT so.id_so,  a.nama_apotek, ar.nama_apoteker, a.lokasi_apotek
+	// 	FROM tbl_event_so so JOIN tbl_apoteker ar JOIN tbl_apotek a
+	// 	WHERE  so.id_apotek = a.id_apotek AND so.id_apoteker = ar.id_apoteker';
+	// 	$dataProvider2=new CSqlDataProvider($sql2, array(
+	// 		'keyField'=>'id_so',
+	// 		'pagination'=>array(
+	// 			'pageSize'=>25,
+	// 		),
+	// 	));
+	// 	return $dataProvider2;
+	// }
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -78,6 +93,7 @@ class EventSO extends CActiveRecord
 		return array(
 			'id_so' => 'Id So',
 			'id_apotek' => 'Nama Apotek',
+			'id_apoteker'=> 'Nama Apoteker',
 			'tgl_mulai' => 'Tgl Mulai',
 			'tgl_berakhir' => 'Tgl Berakhir',
 			'total_selisih_item' => 'Total Selisih Item',
@@ -105,6 +121,7 @@ class EventSO extends CActiveRecord
 
 		$criteria->compare('id_so',$this->id_so);
 		$criteria->compare('id_apotek',$this->id_apotek);
+		$criteria->compare('id_apoteker',$this->id_apoteker);
 		$criteria->compare('tgl_mulai',$this->tgl_mulai,true);
 		$criteria->compare('tgl_berakhir',$this->tgl_berakhir,true);
 		$criteria->compare('total_selisih_item',$this->total_selisih_item);
@@ -127,17 +144,7 @@ class EventSO extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	public function getS()
-{
-	$sql1='SELECT count(id_so), id_so FROM tbl_event_so GROUP BY id_so';
-	$dataProvider1 = new CSqlDataProvider($sql1, array(
-		'keyField'=>'id_so',
-		'pagination'=>array(
-			'pageSize'=>5,
-		),
-	));
-	return $dataProvider1;
-}
+
 	
 	/**
 	 * Returns the static model of the specified AR class.

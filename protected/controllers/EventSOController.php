@@ -34,11 +34,11 @@ class EventSOController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','getPDF2'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','report','export','tampil','exportExcel','report1'),
+				'actions'=>array('admin','delete','report','export','tampil','exportExcel','report1','PDF2','getPDF2','PDF','tes'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -119,6 +119,8 @@ class EventSOController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
+
+
 	/**
 	 * Lists all models.
 	 */
@@ -143,10 +145,14 @@ class EventSOController extends Controller
 	public function actionReport()
 	{
 		$dataProvider1=EventSO::model()->getTes();
+	//	$dataProvider2=EventSO::model()->getReportIDSO();
 		$this->render('report', array(
 			'dataProvider1'=>$dataProvider1,
+		//	'dataProvider2'=>$dataProvider2,
+
 		));
 	}
+	
 	
 	
 
@@ -158,10 +164,29 @@ class EventSOController extends Controller
 		));
 
 	}
+	public function actionPDF()
 	
+	{
+		$model=new EventSO('getTes');
+	
+		$pdf=Yii::CreateComponent('application.extensions.fpdf.fpdf');
+		$pdf=new FPDF('P','cm','A4',true, 'UTF-8');
+		$pdf->AddPage();
+		$pdf->Output();
+		$this->render('PDF');
 
+	}
 
-
+	public function actionPDF2()
+	{
+		
+		$pdf = new PDF2('L','mm', array('215','330'));
+		$pdf->getPDF2();
+		//$pdf->Output();
+	//	$this->render('PDF2');
+	}
+	
+	
 	public function getIdItem($id_item) {
 		$model= Item::model()->findByPk($id_item);
 		if($model!=null)
@@ -180,45 +205,15 @@ class EventSOController extends Controller
 		return "";
 	}
 
-	public function actionCreatepdf(){
-	
-		$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-		spl_autoload_register(array('YiiBase','autoload'));
-		                
-		// set document information
-		$pdf->SetCreator(PDF_CREATOR);  
-		                
-		$pdf->SetTitle("Stock Opname Report -2020");                
-		$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, "Selling Report -2013", "selling report for Jun- 2013");
-		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-		$pdf->SetFont('helvetica', '', 8);
-		$pdf->SetTextColor(80,80,80);
-		$pdf->AddPage();
-		                 
-		//Write the html
-		$html = "<div style='margin-bottom:15px;'>This is testing HTML.</div>";
-		//Convert the Html to a pdf document
-		$pdf->writeHTML($html, true, false, true, false, '');
-		
-		$header = array('ID SO', 'ID item', 'Nama Item', 'Jumlah Stok','Jumlah Stok Tempat','Harga Per Item','Selisih Total Item','Selisih Total Harga'); //TODO:you can change this Header information according to your need.Also create a Dynamic Header.
-
-		// data loading
-		$data = $pdf->LoadData(Yii::getPathOfAlias('ext.tcpdf').DIRECTORY_SEPARATOR.'table_data_demo.txt'); //This is the example to load a data from text file. You can change here code to generate a Data Set from your model active Records. Any how we need a Data set Array here.
-		// print colored table
-		$pdf->ColoredTable($header, $data);
-		// reset pointer to the last page
-		$pdf->lastPage();
-		
-		//Close and output PDF document
-		$pdf->Output('filename.pdf', 'I');
-		Yii::app()->end();
-		
+	public function getIdApoteker($id_apoteker) {
+		$model= Apoteker::model()->findByPk($id_apoteker);
+		if($model!=null)
+		{
+			return $model->nama_apoteker;
+		}
+		return "";
 	}
+
 
 	public function actionReport1()
 	{
@@ -230,50 +225,9 @@ class EventSOController extends Controller
 	}
 
 
-	public function actionExportExcel(){
-		$model = new EventSO();
-		$this->widget('ext.EExcelView', array(
-			'grid_mode'=>'export',
-			'title' => 'Daftar SO',
-		'dataProvider' =>$model->getTes(),
-	//	'filter' => $model,
-		'columns' => array(
-			'id_so',
-			'id_item',
-			'nama_item',
-			'jlh_stok',
-			'jlh_stok_tem',
-			'harga',
-			'selisih_total_item',
-			'selisih_total_harga',
-		),
-	));
-}
 
-	public function getSelisih(){
-			$count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM tbl_event_so')->queryScalar();
-			$sql='SELECT  p.id_item 
-			FROM tbl_pencatatan p';
-			 $rawData = Yii::app()->db->createCommand($sql);
-			$model=new CSqlDataProvider($rawData, array(
-				'totalItemCount'=>$count,
-				'keyField' => 'id_so', 
-				'sort'=>array(
-					'attributes'=>array(
-						'id_item','is_so'
-						 
-											  
-					),
-				),
-				'pagination'=>array(
-					'pageSize'=>10,
-				),
-			));
-			$this->render('reportselisih', array(
-				'model' => $model,
-			));
-		 }
-	
+
+
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

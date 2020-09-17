@@ -39,7 +39,7 @@ return array(
 			'class'         => 'ext.yii-pdf.EYiiPdf',
 			'params'        => array(
 				'mpdf'     => array(
-					'librarySourcePath' => 'application.vendors.mpdf.*',
+					'librarySourcePath' => 'application.vendor.mpdf.*',
 					'constants'         => array(
 						'_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
 					),
@@ -59,8 +59,8 @@ return array(
 					)*/
 				),
 				'HTML2PDF' => array(
-					'librarySourcePath' => 'application.vendors.html2pdf.*',
-					'classFile'         => 'html2pdf.class.php', // For adding to Yii::$classMap
+					'librarySourcePath' => 'application.extensions.html2pdf.*',
+					'classFile'         => 'html2pdf.php', // For adding to Yii::$classMap
 					/*'defaultParams'     => array( // More info: http://wiki.spipu.net/doku.php?id=html2pdf:en:v4:accueil
 						'orientation' => 'P', // landscape or portrait orientation
 						'format'      => 'A4', // format A4, A5, ...

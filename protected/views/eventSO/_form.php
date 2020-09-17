@@ -24,6 +24,13 @@
 	<?php echo $form->error($model,'id_apotek'); ?>
 	</div>	
 
+    
+	<?php echo $form->errorSummary($model); ?>
+	<div class="row">
+	<?php echo $form->labelEx($model,'id_apoteker'); ?>
+ 	<?php echo CHtml::activeDropDownList($model, 'id_apoteker', CHtml::listData(Apoteker::model()->findAll(), 'id_apoteker', 'nama_apoteker'), array('empty'=>'Pilih Apoteker')); ?>
+	<?php echo $form->error($model,'id_apoteker'); ?>
+	</div>	
 
 
 

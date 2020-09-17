@@ -22,6 +22,11 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'id_apoteker'); ?>
+		<?php echo $form->textField($model,'id_apoteker'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'tgl_mulai'); ?>
 		<?php echo $form->textField($model,'tgl_mulai'); ?>
 	</div>

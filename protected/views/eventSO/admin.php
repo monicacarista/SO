@@ -10,6 +10,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List EventSO', 'url'=>array('index')),
 	array('label'=>'Create EventSO', 'url'=>array('create')),
+	array('label'=>'Report', 'url'=>array('report')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -50,6 +51,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'name'=>'id_apotek',
 			'header'=>'Nama Apotek',
 			'value'=>'$this->grid->getController()->getIdApotek($data->id_apotek)'
+		),
+		array(
+			'name'=>'id_apoteker',
+			'header'=>'Nama Apoteker',
+			'value'=>'$this->grid->getController()->getIdApoteker($data->id_apoteker)'
 		),
 		'tgl_mulai',
 		'tgl_berakhir',		
