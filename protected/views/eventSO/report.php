@@ -65,20 +65,12 @@ $this->menu=array(
 		),
 
 
-		// 'id_so',
-		// 'id_apotek',
-		// array(
-		// 	'name'=>'id_apotek',
-		// 	'header'=>'Nama Apotek',
-		// 	'value'=>'$this->grid->getController()->getIdApotek($data->id_apotek)'
-		// ),
-		// 'tgl_mulai',
-		// 'tgl_berakhir',
-		// 'total_selisih',
-		
 		
 	),
 )); ?>
-<?php echo CHtml::beginForm(array('EventSO/report1')); ?>
+<!-- <?php echo CHtml::beginForm(array('EventSO/report1')); ?> -->
 
-<?php echo CHtml::submitButton('Export to .csv'); ?>
+<?php echo CHtml::submitButton('Export to .csv', array('submit'=>array('EventSO/report1'))); ?>
+
+<?php echo CHtml::submitButton('Export to .pdf', array('submit' => array('EventSO/PDF2'))); ?>
+

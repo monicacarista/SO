@@ -3,7 +3,6 @@
 class EventSOController extends Controller
 {
 
-
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -176,14 +175,31 @@ class EventSOController extends Controller
 		$this->render('PDF');
 
 	}
+	public function actionTes()
+	{
+		$dataProvider1=EventSO::model()->getTes();
+	//	$dataProvider2=EventSO::model()->getReportIDSO();
+		$this->render('report', array(
+			'dataProvider1'=>$dataProvider1,
+		//	'dataProvider2'=>$dataProvider2,
+
+		));
+
+	}
 
 	public function actionPDF2()
 	{
-		
-		$pdf = new PDF2('L','mm', array('215','330'));
-		$pdf->getPDF2();
-		//$pdf->Output();
-	//	$this->render('PDF2');
+	require_once 'C:\xampp\htdocs\SO\vendor\autoload.php' ;
+	$mPDF1 = new \Mpdf\Mpdf();
+	$nama='Report Stock Opname';
+	$dataProvider1=EventSO::model()->getTes();
+	// 	 ///////
+	// 	// // //Write some HTML code:
+	$mPDF1->WriteHTML($this->renderPartial('tes',array(
+		'dataProvider1' => $dataProvider1), true));
+
+	$mPDF1->Output($nama,'I');
+
 	}
 	
 	
