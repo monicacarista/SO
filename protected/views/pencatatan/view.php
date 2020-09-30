@@ -7,6 +7,13 @@ $this->breadcrumbs=array(
 	$model->id_pencatatan,
 );
 
+
+if (Yii::app()->user->isAdmin()) {
+
+	//tampilin menu admin
+	
+	
+	
 $this->menu=array(
 	array('label'=>'List Pencatatan', 'url'=>array('index')),
 	array('label'=>'Create Pencatatan', 'url'=>array('create')),
@@ -14,6 +21,16 @@ $this->menu=array(
 	array('label'=>'Delete Pencatatan', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id_pencatatan),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Pencatatan', 'url'=>array('admin')),
 );
+	} else {
+	
+	//tampilin menu user biasa
+	$this->menu=array(
+		array('label'=>'List Pencatatan', 'url'=>array('index')),
+	array('label'=>'Create Pencatatan', 'url'=>array('create')),
+	array('label'=>'Update Pencatatan', 'url'=>array('update', 'id'=>$model->id_pencatatan)),
+	);
+	}
+
 ?>
 
 <h1>View Pencatatan #<?php echo $model->id_pencatatan; ?></h1>

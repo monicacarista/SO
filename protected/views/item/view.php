@@ -7,6 +7,12 @@ $this->breadcrumbs=array(
 	$model->id_item,
 );
 
+if (Yii::app()->user->isAdmin()) {
+
+	//tampilin menu admin
+	
+	
+	
 $this->menu=array(
 	array('label'=>'List Item', 'url'=>array('index')),
 	array('label'=>'Create Item', 'url'=>array('create')),
@@ -14,6 +20,15 @@ $this->menu=array(
 	array('label'=>'Delete Item', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id_item),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Item', 'url'=>array('admin')),
 );
+	} else {
+	
+	//tampilin menu user biasa
+	$this->menu=array(
+		array('label'=>'List Item', 'url'=>array('index')),
+	array('label'=>'Create Item', 'url'=>array('create')),
+	array('label'=>'Update Item', 'url'=>array('update', 'id'=>$model->id_item)),
+	);
+	}
 ?>
 
 <h1>View Item #<?php echo $model->id_item; ?></h1>

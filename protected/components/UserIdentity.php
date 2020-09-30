@@ -32,7 +32,7 @@ private $_id;
     //     else
     //     {
     //         $this->id=$record->id;
-    //         $this->setState('roles', $record->roles);            
+    //         $this->setState('role', $record->role);            
     //         $this->errorCode=self::ERROR_NONE;
     //     }
     //     return !$this->errorCode;
@@ -47,7 +47,7 @@ private $_id;
 					$this->setState("id", $user->id);
 					$this->setState("first_name", $user->first_name);
 					$this->setState("last_name", $user->last_name);
-					$this->setState("roles", $user->roles);
+					$this->setState("role", $user->role);
 					$user->save();
 			}
 	return !$this->errorCode;

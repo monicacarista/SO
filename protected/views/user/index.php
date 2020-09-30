@@ -6,10 +6,20 @@ $this->breadcrumbs=array(
 	'Users',
 );
 
-$this->menu=array(
-	array('label'=>'Create User', 'url'=>array('create')),
-	array('label'=>'Manage User', 'url'=>array('admin')),
-);
+if (Yii::app()->user->isAdmin()) {
+
+	//tampilin menu admin
+	
+	
+	$this->menu=array(
+		array('label'=>'Create User', 'url'=>array('create')),
+		array('label'=>'Manage User', 'url'=>array('admin')),
+	);
+	} else {
+	
+	//tampilin menu user biasa
+	
+	}
 ?>
 
 <h1>Users</h1>

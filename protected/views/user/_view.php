@@ -29,8 +29,8 @@
 	<?php echo CHtml::encode($data->last_name); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('roles')); ?>:</b>
-	<?php echo CHtml::encode($data->roles); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('role')); ?>:</b>
+	<?php echo CHtml::encode($data->role); ?>
 	<br />
 
 	<?php /*

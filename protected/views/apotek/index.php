@@ -6,10 +6,22 @@ $this->breadcrumbs=array(
 	'Apoteks',
 );
 
-$this->menu=array(
-	array('label'=>'Create Apotek', 'url'=>array('create')),
-	array('label'=>'Manage Apotek', 'url'=>array('admin')),
-);
+if (Yii::app()->user->isAdmin()) {
+
+	//tampilin menu admin
+	
+	
+	$this->menu=array(
+		array('label'=>'Create Apotek', 'url'=>array('create')),
+		array('label'=>'Manage Apotek', 'url'=>array('admin')),
+	);
+	} else {
+	
+	//tampilin menu user biasa
+	$this->menu=array(
+		array('label'=>'Create Apotek', 'url'=>array('create')),
+	);
+	}
 ?>
 
 <h1>Apoteks</h1>

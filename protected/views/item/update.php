@@ -8,12 +8,28 @@ $this->breadcrumbs=array(
 	'Update',
 );
 
-$this->menu=array(
-	array('label'=>'List Item', 'url'=>array('index')),
-	array('label'=>'Create Item', 'url'=>array('create')),
-	array('label'=>'View Item', 'url'=>array('view', 'id'=>$model->id_item)),
-	array('label'=>'Manage Item', 'url'=>array('admin')),
-);
+if (Yii::app()->user->isAdmin()) {
+
+	//tampilin menu admin
+		
+	$this->menu=array(
+		array('label'=>'List Item', 'url'=>array('index')),
+		array('label'=>'Create Item', 'url'=>array('create')),
+		array('label'=>'View Item', 'url'=>array('view', 'id'=>$model->id_item)),
+		array('label'=>'Manage Item', 'url'=>array('admin')),
+	);
+	} else {
+	
+	//tampilin menu user biasa
+	$this->menu=array(
+		array('label'=>'List Item', 'url'=>array('index')),
+		array('label'=>'Create Item', 'url'=>array('create')),
+	);
+	}
+
+
+
+	
 ?>
 
 <h1>Update Item <?php echo $model->id_item; ?></h1>

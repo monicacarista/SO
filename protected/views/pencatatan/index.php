@@ -6,10 +6,22 @@ $this->breadcrumbs=array(
 	'Pencatatans',
 );
 
-$this->menu=array(
-	array('label'=>'Create Pencatatan', 'url'=>array('create')),
-	array('label'=>'Manage Pencatatan', 'url'=>array('admin')),
-);
+if (Yii::app()->user->isAdmin()) {
+
+	//tampilin menu admin
+	
+	
+	$this->menu=array(
+		array('label'=>'Create Pencatatan', 'url'=>array('create')),
+		array('label'=>'Manage Pencatatan', 'url'=>array('admin')),
+	);
+	} else {
+	
+	//tampilin menu user biasa
+	$this->menu=array(
+		array('label'=>'Create Pencatatan', 'url'=>array('create')),
+	);
+	}
 ?>
 
 <h1>Pencatatans</h1>

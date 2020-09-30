@@ -27,7 +27,7 @@ $this->menu=array(
 		'email',
 		'first_name',
 		'last_name',
-		'roles',
+		'role',
 		'sPass',
 		'isActive',
 	),

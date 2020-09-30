@@ -5,9 +5,24 @@
 $this->breadcrumbs=array(
 	'List Jadwal Pencatatan',
 );
+if (Yii::app()->user->isAdmin()) {
 
-
+	//tampilin menu admin
+	
+	
+	$this->menu=array(
+		array('label'=>'Create Jadwal', 'url'=>array('create')),
+		array('label'=>'Manage Jadwal', 'url'=>array('admin')),
+	);
+	} else {
+	
+	//tampilin menu user biasa
+	
+	}
 ?>
+
+
+
 
 <h1>List Jadwal Stock Opname</h1>
 

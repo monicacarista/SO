@@ -6,12 +6,22 @@ $this->breadcrumbs=array(
 	'Event Sos',
 );
 
+if (Yii::app()->user->isAdmin()) {
+
+	//tampilin menu admin
+  
 $this->menu=array(
 	array('label'=>'Create EventSO', 'url'=>array('create')),
 	array('label'=>'Manage EventSO', 'url'=>array('admin')),
 	
 
 );
+  } else {
+  
+	//tampilin menu user biasa
+  
+  }
+
 ?>
 
 <h1>List Event Stock Opname</h1>

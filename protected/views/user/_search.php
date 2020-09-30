@@ -37,8 +37,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'roles'); ?>
-		<?php echo $form->textField($model,'roles',array('size'=>15,'maxlength'=>15)); ?>
+		<?php echo $form->label($model,'role'); ?>
+		<?php echo $form->textField($model,'role',array('size'=>15,'maxlength'=>15)); ?>
 	</div>
 
 	<div class="row">
