@@ -16,6 +16,10 @@
 		<?php echo $form->textField($model,'id_item'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'kode_item'); ?>
+		<?php echo $form->textField($model,'kode_item',array('size'=>6,'maxlength'=>6)); ?>
+	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'nama_item'); ?>
@@ -28,9 +32,9 @@
 	</div>
 
 	<div class="row">
-        <?php echo $form->label($model,'lokasi_rak'); ?>
-        <?php echo $form->textField($model,'lokasi_rak',array('size'=>60,'maxlength'=>150)); ?>
-    </div>
+		<?php echo $form->label($model,'lokasi_rak'); ?>
+		<?php echo $form->textField($model,'lokasi_rak',array('size'=>60,'maxlength'=>150)); ?>
+	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>

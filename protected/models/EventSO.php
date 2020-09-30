@@ -53,7 +53,7 @@ class EventSO extends CActiveRecord
 		$sql1='SELECT *, (jml_stok_tem - jml_stok)as ttl_selisih_item, (jml_stok_tem - jml_stok)*harga as selisih_harga
 		FROM
 		(
-		SELECT i.id_item, i.nama_item, SUM(stok) AS jml_stok, harga FROM tbl_dtl_item d
+		SELECT i.id_item, i.nama_item, satuan, SUM(stok) AS jml_stok, harga FROM tbl_dtl_item d
 		LEFT JOIN tbl_item i ON i.id_item = d.id_item 
 		GROUP BY id_item) AS xxx
 		LEFT JOIN

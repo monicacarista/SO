@@ -1,71 +1,53 @@
-<?php
-Yii::import('application.extensions.fpdf.*');
 
-class PDF extends FPDF{
-     function Header(){
-        $this->setFont('Arial','B',12);
-        $this->Cell(40);
-        $this->Cell(30,7,'UKDW',0.1,'L');
-        $this->Ln();
 
-    }
+<h1> Report Stock Opname</h1>
 
-    function Footer(){
-        $this->SetY(-40);
-        $this->SetFont('Arial','I',8);
-        $this->Cell(0,10,'Page'.$this->PageNo(),0,0,'C');
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'event-so-grid',
+	'dataProvider'=>$dataProvider1,
+'columns'=>array(
+ 
+		array(
+			'name'=>'Nama Item ',
+			'type'=>'raw',
+			'value'=>'$data["nama_item"]',
+		),
+		array(
+			'name'=>'Jumlah Stok',
+			'type'=>'raw',
+			'value'=>'$data["jml_stok"]',
+		),
+		array(
+			'name'=>'Jumlah Stok Tempat',
+			'type'=>'raw',
+			'value'=>'$data["jml_stok_tem"]',
+		),
+		
+		array(
+			'name'=>'Satuan',
+			'type'=>'raw',
+			'value'=>'$data["satuan"]',
+		),
 
-    }
+		array(
+			'name'=>'Harga Per Item',
+			'type'=>'raw',
+			//'value'=>'$data["harga"]',
+			'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["harga"])',
+		),
+		
+		
+		array(
+			'name'=>'Selisih Total Item',
+			'type'=>'raw',
+			'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["ttl_selisih_item"])',
+		),
+		array(
+			'name'=>'Selisih Total Harga',
+			'type'=>'raw',
+			'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["selisih_harga"])',
+		),
+		
+	),
+)); ?>
 
-    function headerTable(){
-        $this->Ln();
-        $this->SetFont('Times','B','12');
-        $this->Cell(20,10,'ID SO',1,0,'C');
-        // $this->Cell(40,10,'tgl_mulai',1,0,'C');
-        // $this->Cell(40,10,'tgl_berakhir',1,0,'C');
-      
-        $model = new EventSO('getTes');
-        foreach($model as $row){
-        $this->Cell(20,10, $row['id_so'],1,0,'C');
-        // $this->Cell(40,10, $row['tgl_mulai'],1,0,'L');
-        // $this->Cell(40,10, $row['tgl_berakhir'],1,1,'L');
-
-        }
-            $this->Ln();
-
-        // $fill=false;
-        // $model = EventSO::model()->getTes();
-        // $no=0;
-        // foreach($model as $row)
-        // {
-        //     $no++;
-        //     $pdf->Cell(10,5, $no, 1, '0','L', $fill);
-        //     $pdf->Cell(80,5, $row->id_so,1,'0','L',$fill);
-        //     $fill = !$fill;
-        //     $pdf->Ln();
-        // }
-      
-        }
-    
-}
-
-$pdf=new PDF();
-// $pdf->AliasNbPages();
-$pdf->AddPage('P','A4');
-$pdf->headerTable();
-$pdf->SetFont('Times','',12);
-$pdf->SetFillColor(224,235,255);
-$pdf->SetTextColor(0);
-
-// $no=0;
-// foreach ($model as $baris)
-// {
-//     $no++;
-//     $pdf->Cell(10,5,$no,1,'0','L', $fill);
-//     $pdf->Cell(80,5,$baris->nama_barang,1,'0','L',$fill);
-//     $pdf->Cell(30,5)
-// }
-//$pdf->Cell(40,10,'TEs');
-$pdf->Output();
-
-?>

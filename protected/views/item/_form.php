@@ -19,6 +19,11 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'kode_item'); ?>
+		<?php echo $form->textField($model,'kode_item',array('size'=>6,'maxlength'=>6)); ?>
+		<?php echo $form->error($model,'kode_item'); ?>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'nama_item'); ?>
@@ -26,17 +31,18 @@
 		<?php echo $form->error($model,'nama_item'); ?>
 	</div>
 
-
 	<div class="row">
 		<?php echo $form->labelEx($model,'satuan'); ?>
 		<?php echo $form->textField($model,'satuan',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'satuan'); ?>
 	</div>
 
-        <?php echo $form->labelEx($model,'lokasi_rak'); ?>
-        <?php echo $form->textField($model,'lokasi_rak',array('size'=>60,'maxlength'=>150)); ?>
-        <?php echo $form->error($model,'lokasi_rak'); ?>
-    </div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'lokasi_rak'); ?>
+		<?php echo $form->textField($model,'lokasi_rak',array('size'=>60,'maxlength'=>150)); ?>
+		<?php echo $form->error($model,'lokasi_rak'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

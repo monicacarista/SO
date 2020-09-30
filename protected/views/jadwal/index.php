@@ -6,10 +6,7 @@ $this->breadcrumbs=array(
 	'List Jadwal Pencatatan',
 );
 
-$this->menu=array(
-	array('label'=>'Create Jadwal', 'url'=>array('create')),
-	array('label'=>'Manage Jadwal', 'url'=>array('admin')),
-);
+
 ?>
 
 <h1>List Jadwal Stock Opname</h1>

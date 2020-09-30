@@ -52,17 +52,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'filename'=>'Report SO',
 	'columns'=>array(
-        array(
-            'name'=>'ID SO',
-            'type'=>'raw',
-            'value'=>'$data["id_so"]',
-             ),
-            array(
-                'name'=>'ID Item ',
-                'type'=>'raw',
-                'value'=>'$data["id_item"]',
-            ),
-          
+     
             array(
                 'name'=>'Nama Item ',
                 'type'=>'raw',
@@ -74,30 +64,35 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                 'value'=>'$data["jml_stok"]',
             ),
             array(
-                'name'=>'Jumlah Stok Tempat',
+                'name'=>'Jumlah Stok SO',
                 'type'=>'raw',
                 'value'=>'$data["jml_stok_tem"]',
             ),
             
+            array(
+                'name'=>'Satuan',
+                'type'=>'raw',
+                'value'=>'$data["satuan"]',
+            ),
     
             array(
                 'name'=>'Harga Per Item',
                 'type'=>'raw',
-                'value'=>'$data["harga"]',
+                //'value'=>'$data["harga"]',
+                'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["harga"])',
             ),
             
             
             array(
                 'name'=>'Selisih Total Item',
                 'type'=>'raw',
-                'value'=>'$data["ttl_selisih_item"]',
+                'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["ttl_selisih_item"])',
             ),
             array(
                 'name'=>'Selisih Total Harga',
                 'type'=>'raw',
-                'value'=>'$data["selisih_harga"]',
+                'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["selisih_harga"])',
             ),
-    
     
 		),
 		

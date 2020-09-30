@@ -6,7 +6,6 @@ $this->breadcrumbs=array(
 	'Pencatatans'=>array('index'),
 	'Create',
 );
-
 $this->menu=array(
 	array('label'=>'List Pencatatan', 'url'=>array('index')),
 	array('label'=>'Manage Pencatatan', 'url'=>array('admin')),

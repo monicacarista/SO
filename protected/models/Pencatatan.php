@@ -60,7 +60,7 @@ class Pencatatan extends CActiveRecord
 			'id_so'=>'ID SO',
 			'id_jadwal' => 'Jadwal Pengecekan',
 			'id_item' => 'Nama Item',
-			'stok_tempat' => 'Stok Tempat',
+			'stok_tempat' => 'Stok SO',
 			'id_dtl_item' => 'Batch Number',
 		);
 	}

@@ -32,10 +32,10 @@ class EventSOController extends Controller
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getPDF2'),
-				'users'=>array('@'),
-			),
+			// array('allow', // allow authenticated user to perform 'create' and 'update' actions
+			// 	'actions'=>array('create','update','getPDF2'),
+			// 	'users'=>array('@'),
+			// ),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','report','export','tampil','exportExcel','report1','PDF2','getPDF2','PDF','tes'),
 				'users'=>array('admin'),
@@ -163,18 +163,7 @@ class EventSOController extends Controller
 		));
 
 	}
-	public function actionPDF()
 	
-	{
-		$model=new EventSO('getTes');
-	
-		$pdf=Yii::CreateComponent('application.extensions.fpdf.fpdf');
-		$pdf=new FPDF('P','cm','A4',true, 'UTF-8');
-		$pdf->AddPage();
-		$pdf->Output();
-		$this->render('PDF');
-
-	}
 	public function actionTes()
 	{
 		$dataProvider1=EventSO::model()->getTes();
@@ -195,7 +184,7 @@ class EventSOController extends Controller
 	$dataProvider1=EventSO::model()->getTes();
 	// 	 ///////
 	// 	// // //Write some HTML code:
-	$mPDF1->WriteHTML($this->renderPartial('tes',array(
+	$mPDF1->WriteHTML($this->renderPartial('PDF',array(
 		'dataProvider1' => $dataProvider1), true));
 
 	$mPDF1->Output($nama,'I');

@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'tbl_item':
  * @property integer $id_item
+ * @property string $kode_item
  * @property string $nama_item
  * @property string $satuan
  * @property string $lokasi_rak
@@ -27,13 +28,14 @@ class Item extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('nama_item, satuan, lokasi_rak', 'required'),
-            array('nama_item, lokasi_rak', 'length', 'max'=>150),
-            array('satuan', 'length', 'max'=>128),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
-            array('id_item, nama_item, satuan, lokasi_rak', 'safe', 'on'=>'search'),
-        );
+			array('kode_item, nama_item, satuan, lokasi_rak', 'required'),
+			array('kode_item', 'length', 'max'=>6),
+			array('nama_item, lokasi_rak', 'length', 'max'=>150),
+			array('satuan', 'length', 'max'=>128),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id_item, kode_item, nama_item, satuan, lokasi_rak', 'safe', 'on'=>'search'),
+		);
 	}
 
 	/**
@@ -54,6 +56,7 @@ class Item extends CActiveRecord
 	{
 		return array(
 			'id_item' => 'Id Item',
+			'kode_item' => 'Kode Item',
 			'nama_item' => 'Nama Item',
 			'satuan' => 'Satuan',
 			'lokasi_rak' => 'Lokasi Rak',
@@ -79,7 +82,7 @@ class Item extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_item',$this->id_item);
-		
+		$criteria->compare('kode_item',$this->kode_item,true);
 		$criteria->compare('nama_item',$this->nama_item,true);
 		$criteria->compare('satuan',$this->satuan,true);
 		$criteria->compare('lokasi_rak',$this->lokasi_rak,true);
@@ -88,39 +91,6 @@ class Item extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-	public function getMyreport()
-        {
-            $from=$_REQUEST['from'];
-            $until=$_REQUEST['until']; 
-		$sql="SELECT * FROM tbl_item where CREATED_DATE >= '$from' and CREATED_DATE <= '$until' order by id_item desc "; // your sql here
-		$dataReportItem=new CSqlDataProvider($sql,array(
-			'keyField' => 'id_item',
-			'pagination'=>array(
-				'pageSize'=>10,
-			),
-		));	
-		return $dataReportItem;
-		}
-		
-		public static function exportPdf()
-		{
-			$pdf = Yii::createComponent('application.extensions.tcpdf.tcpdf',
-								'P', 'c', 'A4', true, 'UTF-8');
-			$pdf->SetCreator(PDF_CREATOR);
-			$pdf->SetAuthor("Nicola Asuni");
-			$pdf->SetTitle("TCPDF Example 002");
-			$pdf->SetSubject("TCPDF Tutorial");
-			$pdf->SetKeywords("TCPDF, PDF, example, test, guide");
-			$pdf->setPrintHeader(false);
-			$pdf->setPrintFooter(false);
-			//$pdf->AliasNbPages();
-			$pdf->AddPage();
-			$pdf->SetFont("times", "BI", 20);
-			$pdf->Cell(0,10,"Example 002",1,1,'C');
-			$pdf->Output("example_002.pdf", "I");
-		}	
-		
-
 
 	/**
 	 * Returns the static model of the specified AR class.

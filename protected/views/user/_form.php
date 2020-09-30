@@ -49,12 +49,6 @@
 		<?php echo $form->error($model,'last_name'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'roles'); ?>
-		<?php echo $form->textField($model,'roles',array('size'=>15,'maxlength'=>15)); ?>
-		<?php echo $form->error($model,'roles'); ?>
-	</div>
-
 	
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

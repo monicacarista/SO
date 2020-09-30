@@ -22,8 +22,9 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id_item',
+		'kode_item',
 		'nama_item',
-		'satuan',	
-        'lokasi_rak',
+		'satuan',
+		'lokasi_rak',
 	),
 )); ?>
