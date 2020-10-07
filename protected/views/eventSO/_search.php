@@ -37,11 +37,14 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'periodeSO'); ?>
+		<?php echo $form->textField($model,'periodeSO'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'total_selisih_item'); ?>
 		<?php echo $form->textField($model,'total_selisih_item'); ?>
 	</div>
-
-
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>

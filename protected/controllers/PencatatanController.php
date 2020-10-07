@@ -36,7 +36,7 @@ class PencatatanController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','tes'),
+				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -74,23 +74,11 @@ class PencatatanController extends Controller
 				$this->redirect(array('view','id'=>$model->id_pencatatan));
 		}
 
-	
-			
 		$this->render('create',array(
 			'model'=>$model,
 		));
 	}
-	public function actionTes(){
-		$data = Item::model()->findAll('id_item=:id_item', array(':id_item' => $_POST['id_item']));
-    $data = CHtml::listData($data, 'id_rak', 'lokasi_rak');
-    foreach ($data as $value => $name) {
-        echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
-	}
-	
-	$this->render('tes',array(
-		'model'=>$model,
-	));
-	}
+
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -114,70 +102,7 @@ class PencatatanController extends Controller
 			'model'=>$model,
 		));
 	}
-	public function getIdApotek($id_apotek) {
-		$model= Apotek::model()->findByPk($id_apotek);
-		if($model!=null)
-		{
-			return $model->nama_apotek;
-		}
-		return "";
-	}
 
-	public function actionAutocomplete()
- {
- $res =array();
-
-            if (isset($_GET['term'])) {
-                    $qtxt ="SELECT tbl_pencatatan.id_apotek, nama_apotek from tbl_pencatatan join tbl_apotek WHERE nama_apotek  LIKE :nama_apotek
-                            ORDER BY id_apotek ASC"; 
-                    $command =Yii::app()->db->createCommand($qtxt);
-                    $command->bindValue(":id_apotek", $_GET['term'].'%', PDO::PARAM_STR);
-                    $res =$command->queryColumn();
-            }
-
-            echo CJSON::encode($res);
-            Yii::app()->end();
-
- }
-
-	public function getIdItem($id_item) {
-		$model= Item::model()->findByPk($id_item);
-		if($model!=null)
-		{
-			return $model->nama_item;
-		}
-		return "";
-	}
-	public function getIdSO($id_so) {
-		$model= EventSO::model()->findByPk($id_so);
-		if($model!=null)
-		{
-			return $model->id_so;
-		}
-		return "";
-	}
-
-
-	public function getBatch($id_dtl_item) {
-		$model= DtlItem::model()->findByPk($id_dtl_item);
-		if($model!=null)
-		{
-			return $model->batch;
-		}
-		return "";
-	}
-
-	public function actionCariId() 
-{
-   $res =array();
-   if (isset($_GET['term'])) {
-     $qtxt ="SELECT id_item as ID FROM Item WHERE nama LIKE :name ORDER BY nama LIMIT 20";
-     $command =Yii::app()->db->createCommand($qtxt);
-     $command->bindValue(":name", '%'.$_GET['term'].'%', PDO::PARAM_STR);
-     $res =$command->queryAll();
-   }
-   echo CJSON::encode($res);
-}
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -191,9 +116,6 @@ class PencatatanController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
-
-
-
 
 	/**
 	 * Lists all models.
@@ -234,6 +156,24 @@ class PencatatanController extends Controller
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
+	}
+
+	public function getBatch($id_dtl_item) {
+		$model= DtlItem::model()->findByPk($id_dtl_item);
+		if($model!=null)
+		{
+			return $model->batch;
+		}
+		return "";
+	}
+
+	public function getItem($id_item) {
+		$model= Item::model()->findByPk($id_item);
+		if($model!=null)
+		{
+			return $model->nama_item;
+		}
+		return "";
 	}
 
 	/**

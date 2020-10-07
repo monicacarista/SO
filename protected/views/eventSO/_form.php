@@ -18,21 +18,29 @@
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-	<div class="row">
-	<?php echo $form->labelEx($model,'id_apotek'); ?>
- 	<?php echo CHtml::activeDropDownList($model, 'id_apotek', CHtml::listData(Apotek::model()->findAll(), 'id_apotek', 'nama_apotek'), array('empty'=>'Pilih Apotek')); ?>
-	<?php echo $form->error($model,'id_apotek'); ?>
-	</div>	
-
     
-	<?php echo $form->errorSummary($model); ?>
-	<div class="row">
+
+    <div class="row">
 	<?php echo $form->labelEx($model,'id_apoteker'); ?>
- 	<?php echo CHtml::activeDropDownList($model, 'id_apoteker', CHtml::listData(Apoteker::model()->findAll(), 'id_apoteker', 'nama_apoteker'), array('empty'=>'Pilih Apoteker')); ?>
-	<?php echo $form->error($model,'id_apoteker'); ?>
-	</div>	
+    <?php 
+    $this->widget('ext.select2.ESelect2',array(
+      'model'=>$model,
+      'attribute'=>'id_apoteker',
+      'data'=>CHtml::listData(
+        Apoteker::model()->findAll(), 'id_apoteker', 'nama_apoteker'),
 
-
+      'options'=>array(
+		'placeholder'=>'Pilih Apoteker',
+		'allowClear'=>true,
+	),
+	'htmlOptions'=>array(						
+		'options'=>array(					  								        ''=>array('value'=>null,'selected'=>null),
+		),
+	),		
+    )); 
+    ?>
+    <?php echo $form->error($model,'id_apoteker'); ?>
+	</div>
 
 	<div class="row">
      <?php echo $form->labelEx($model,'tgl_mulai'); ?>
@@ -48,7 +56,6 @@
      ?>
 	</div>
 
-
 	<div class="row">
      <?php echo $form->labelEx($model,'tgl_berakhir'); ?>
      <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -61,10 +68,11 @@
          ),
      )); 
      ?>
+    
+       
 	</div>
 
 
-	
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

@@ -32,7 +32,7 @@ class ItemController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','create2','scanner'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -78,7 +78,46 @@ class ItemController extends Controller
 			'model'=>$model,
 		));
 	}
+	public function actionCreate2()
+	{
+		$model=new Item;
 
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Item']))
+		{
+			$model->attributes=$_POST['Item'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id_item));
+		}
+
+		$this->render('create2',array(
+			'model'=>$model,
+		));
+	}
+	public function actionScanner()
+	{
+		
+			$this->render('scanner');
+		
+
+	}
+
+	public static function getItemBarcode($valueArray) {
+        $elementId = $valueArray['id_item'] . "_bcode"; /*the div element id*/
+        $value = $valueArray['barocde'];
+        $type = 'code128'; /* you can set the type dynamically if you want valueArray eg - $valueArray['type']*/
+        self::getBarcode(array('elementId' => $elementId, 'value' => $value, 'type' => $type)); 
+ 		return CHtml::tag('div', array('id' => $elementId));
+	}
+	
+	public static function getBarcode($optionsArray) {
+ 
+        Yii::app()->getController()->widget('ext.Yii-Barcode-Generator.Barcode', $optionsArray);
+    }
+
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -116,6 +155,8 @@ class ItemController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
+
+
 
 	/**
 	 * Lists all models.

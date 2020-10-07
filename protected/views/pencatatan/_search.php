@@ -21,7 +21,6 @@
 		<?php echo $form->textField($model,'id_so'); ?>
 	</div>
 
-
 	<div class="row">
 		<?php echo $form->label($model,'id_jadwal'); ?>
 		<?php echo $form->textField($model,'id_jadwal'); ?>
@@ -37,12 +36,11 @@
 		<?php echo $form->textField($model,'stok_tempat'); ?>
 	</div>
 
-
 	<div class="row">
-        <?php echo $form->label($model,'id_dtl_item'); ?>
-        <?php echo $form->textField($model,'id_dtl_item',array('size'=>11,'maxlength'=>11)); ?>
-    </div>
-	
+		<?php echo $form->label($model,'id_dtl_item'); ?>
+		<?php echo $form->textField($model,'id_dtl_item',array('size'=>11,'maxlength'=>11)); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

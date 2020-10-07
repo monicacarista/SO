@@ -5,14 +5,14 @@
  *
  * The followings are the available columns in table 'tbl_pencatatan':
  * @property integer $id_pencatatan
- * @property integer $id_jadwal
+ * @property integer $id_so
+ * @property string $id_jadwal
  * @property integer $id_item
  * @property integer $stok_tempat
  * @property string $id_dtl_item
  */
 class Pencatatan extends CActiveRecord
 {
-
 	/**
 	 * @return string the associated database table name
 	 */
@@ -29,13 +29,12 @@ class Pencatatan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_jadwal, id_so,  id_item, stok_tempat, id_dtl_item' ,'required'),
-			array(' id_so, id_item, stok_tempat', 'numerical', 'integerOnly'=>true),
+			array(' id_item, stok_tempat, id_dtl_item', 'required'),
+			array('id_so, id_item, stok_tempat', 'numerical', 'integerOnly'=>true),
+			array('id_dtl_item', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_pencatatan, id_so, id_jadwal,  id_item, stok_tempat,id_dtl_item', 'safe', 'on'=>'search'),
-			array('id_item','checkId'),
-   array('id_item', 'default', 'setOnEmpty' => true),
+			array('id_pencatatan, id_so, id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,11 +56,11 @@ class Pencatatan extends CActiveRecord
 	{
 		return array(
 			'id_pencatatan' => 'Id Pencatatan',
-			'id_so'=>'ID SO',
-			'id_jadwal' => 'Jadwal Pengecekan',
-			'id_item' => 'Nama Item',
-			'stok_tempat' => 'Stok SO',
-			'id_dtl_item' => 'Batch Number',
+			'id_so' => 'Id So',
+			'id_jadwal' => 'Id Jadwal',
+			'id_item' => 'Id Item',
+			'stok_tempat' => 'Stok Tempat',
+			'id_dtl_item' => 'Id Dtl Item',
 		);
 	}
 
@@ -85,26 +84,16 @@ class Pencatatan extends CActiveRecord
 
 		$criteria->compare('id_pencatatan',$this->id_pencatatan);
 		$criteria->compare('id_so',$this->id_so);
-		$criteria->compare('id_jadwal',$this->id_jadwal);
+		$criteria->compare('id_jadwal',$this->id_jadwal,true);
 		$criteria->compare('id_item',$this->id_item);
 		$criteria->compare('stok_tempat',$this->stok_tempat);
 		$criteria->compare('id_dtl_item',$this->id_dtl_item,true);
-			
-		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-	public function checkId($attribute,$params)
-{
-   $record=Item::model()->findByAttributes(array('id_item'=>$this->attributes['id_item']));
-   if($record===null){
-      $this->addError($attribute, 'Invalid Item');
-   }
-}
-
-
+	
 
 	/**
 	 * Returns the static model of the specified AR class.

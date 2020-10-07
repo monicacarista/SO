@@ -9,11 +9,11 @@
  * @property integer $id_apoteker
  * @property string $tgl_mulai
  * @property string $tgl_berakhir
+ * @property string $periodeSO
  * @property integer $total_selisih_item
  */
 class EventSO extends CActiveRecord
 {
-	public $selisih_stok;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -30,11 +30,11 @@ class EventSO extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_apotek, tgl_mulai, tgl_berakhir', 'required'),
+			array('id_apoteker, tgl_mulai, tgl_berakhir', 'required'),
 			array('id_apotek, id_apoteker, total_selisih_item', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_so, id_apotek, id_apoteker, tgl_mulai, tgl_berakhir, total_selisih_item', 'safe', 'on'=>'search'),
+			array('id_so, id_apotek, id_apoteker, tgl_mulai, tgl_berakhir, periodeSO, total_selisih_item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,44 +46,8 @@ class EventSO extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			//'item'=>array(self::HAS_MANY, 'Post', 'id_item'),
 		);
 	}
-	public function getTes(){
-		$sql1='SELECT *, (jml_stok_tem - jml_stok)as ttl_selisih_item, (jml_stok_tem - jml_stok)*harga as selisih_harga
-		FROM
-		(
-		SELECT i.id_item, i.nama_item, satuan, SUM(stok) AS jml_stok, harga FROM tbl_dtl_item d
-		LEFT JOIN tbl_item i ON i.id_item = d.id_item 
-		GROUP BY id_item) AS xxx
-		LEFT JOIN
-		(
-		SELECT i.id_item, i.nama_item, id_so, SUM(stok_tempat) AS jml_stok_tem FROM tbl_pencatatan p
-		LEFT JOIN tbl_item i ON i.id_item = p.id_item
-		GROUP BY i.id_item) AS yyy 
-		ON xxx.id_item = yyy.id_item ';
-		$dataProvider1=new CSqlDataProvider($sql1, array(
-			'keyField'=>'id_so',
-			'pagination'=>array(
-				'pageSize'=>25,
-			),
-		));
-		return $dataProvider1;
-	}
-
-	// public function getReportIDSO()
-	// {
-	// 	$sql1='SELECT so.id_so,  a.nama_apotek, ar.nama_apoteker, a.lokasi_apotek
-	// 	FROM tbl_event_so so JOIN tbl_apoteker ar JOIN tbl_apotek a
-	// 	WHERE  so.id_apotek = a.id_apotek AND so.id_apoteker = ar.id_apoteker';
-	// 	$dataProvider2=new CSqlDataProvider($sql2, array(
-	// 		'keyField'=>'id_so',
-	// 		'pagination'=>array(
-	// 			'pageSize'=>25,
-	// 		),
-	// 	));
-	// 	return $dataProvider2;
-	// }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -92,12 +56,12 @@ class EventSO extends CActiveRecord
 	{
 		return array(
 			'id_so' => 'Id So',
-			'id_apotek' => 'Nama Apotek',
-			'id_apoteker'=> 'Nama Apoteker',
+			'id_apotek' => 'Id Apotek',
+			'id_apoteker' => 'Id Apoteker',
 			'tgl_mulai' => 'Tgl Mulai',
 			'tgl_berakhir' => 'Tgl Berakhir',
+			'periodeSO' => 'Periode So',
 			'total_selisih_item' => 'Total Selisih Item',
-			
 		);
 	}
 
@@ -124,28 +88,49 @@ class EventSO extends CActiveRecord
 		$criteria->compare('id_apoteker',$this->id_apoteker);
 		$criteria->compare('tgl_mulai',$this->tgl_mulai,true);
 		$criteria->compare('tgl_berakhir',$this->tgl_berakhir,true);
+		$criteria->compare('periodeSO',$this->periodeSO,true);
 		$criteria->compare('total_selisih_item',$this->total_selisih_item);
-		// $criteria->select=(" (stok-stok_tempat) as selisih_stok ");
-		// $criteria->join=(" join tbl_pencatatan p JOIN tbl_dtl_item di ");
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-	public function search2()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id_so',$this->id_so);
-		 $criteria->select=("p.id_item as id_item ");
-		 $criteria->join=(" join tbl_pencatatan p ");
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
 
-	
+	public function getTes(){
+		$sql1='SELECT *, (jml_stok_tem - jml_stok)as ttl_selisih_item, (jml_stok_tem - jml_stok)*harga as selisih_harga
+		FROM
+		(
+		SELECT i.id_item, i.nama_item, satuan, SUM(stok) AS jml_stok, harga FROM tbl_dtl_item d
+		LEFT JOIN tbl_item i ON i.id_item = d.id_item 
+		GROUP BY id_item) AS xxx
+		LEFT JOIN
+		(
+		SELECT i.id_item, i.nama_item, id_so, SUM(stok_tempat) AS jml_stok_tem FROM tbl_pencatatan p
+		LEFT JOIN tbl_item i ON i.id_item = p.id_item
+		GROUP BY i.id_item) AS yyy 
+		ON xxx.id_item = yyy.id_item ';
+		$dataProvider1=new CSqlDataProvider($sql1, array(
+			'keyField'=>'id_so',
+			'pagination'=>array(
+				'pageSize'=>25,
+			),
+		));
+		return $dataProvider1;
+	}
+
+
+	public function searchApoteker() {
+		$data         = array();
+		$packageModel = Apoteker::model()->findAll();
+		foreach($packageModel as $get){
+			$data[] = $get->nama_apoteker;
+		}
+		return $data;
+		Yii::app()->end();
+	}
+
+
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

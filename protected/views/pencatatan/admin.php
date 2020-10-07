@@ -47,20 +47,16 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'columns'=>array(
 		'id_pencatatan',
 		array(
-			'name'=>'id_so',
-			'header'=>'ID SO',
-			'value'=>'$this->grid->getController()->getIdSO($data->id_so)'
+			'name'=>'id_dtl_item',
+			'header'=>'BN',
+			'value'=>'$this->grid->getController()->getBatch($data->id_dtl_item)'
 		),
-		'id_jadwal',
-		
 		array(
 			'name'=>'id_item',
 			'header'=>'Nama Item',
-			'value'=>'$this->grid->getController()->getIdItem($data->id_item)'
+			'value'=>'$this->grid->getController()->getItem($data->id_item)'
 		),
 		'stok_tempat',
-		
-		//Pencatatan::model()->getSelisih()
 		array(
 			'class'=>'CButtonColumn',
 		),

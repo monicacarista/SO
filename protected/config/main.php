@@ -5,13 +5,17 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+
+//bootstrap
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-	'theme' =>'templ',
+	'theme' =>'bootstrap',
+	
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -24,15 +28,18 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'000',
-			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
+		'generatorPaths'=>array(
+			'bootstrap.gii',
 		),
+		'gii'=>array(
 		
-	),
+		'class'=>'system.gii.GiiModule',
+		'password'=>'000',
+		// If removed, Gii defaults to localhost only. Edit carefully to taste.
+		'ipFilters'=>array('127.0.0.1','::1'),
+		
+		),
+		),
 
 	// application components
 	'components'=>array(
@@ -83,6 +90,11 @@ return array(
 			'class'=>'WebUser',
 		),
 
+		//bootstrap
+		'bootstrap'=>array(
+			'class'=>'bootstrap.components.Bootstrap',
+			),
+
 		// uncomment the following to enable URLs in path-format
 		
 		'urlManager'=>array(
@@ -93,6 +105,9 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+
+		
+
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=kp1',
 			'emulatePrepare' => true,

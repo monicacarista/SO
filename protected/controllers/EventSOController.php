@@ -2,7 +2,6 @@
 
 class EventSOController extends Controller
 {
-
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -32,12 +31,12 @@ class EventSOController extends Controller
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
-			// array('allow', // allow authenticated user to perform 'create' and 'update' actions
-			// 	'actions'=>array('create','update','getPDF2'),
-			// 	'users'=>array('@'),
-			// ),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('create','update'),
+				'users'=>array('@'),
+			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','report','export','tampil','exportExcel','report1','PDF2','getPDF2','PDF','tes'),
+				'actions'=>array('admin','delete','report1','report','PDF','tes','PDF2','getPDF2','export','tampil'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -118,12 +117,16 @@ class EventSOController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-
-
 	/**
 	 * Lists all models.
 	 */
-	
+	public function actionIndex()
+	{
+		$dataProvider=new CActiveDataProvider('EventSO');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
 
 	/**
 	 * Manages all models.
@@ -138,9 +141,23 @@ class EventSOController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
-		
-	
 	}
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return EventSO the loaded model
+	 * @throws CHttpException
+	 */
+	public function loadModel($id)
+	{
+		$model=EventSO::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+
 	public function actionReport()
 	{
 		$dataProvider1=EventSO::model()->getTes();
@@ -151,19 +168,7 @@ class EventSOController extends Controller
 
 		));
 	}
-	
-	
-	
 
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('EventSO');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-
-	}
-	
 	public function actionTes()
 	{
 		$dataProvider1=EventSO::model()->getTes();
@@ -190,8 +195,7 @@ class EventSOController extends Controller
 	$mPDF1->Output($nama,'I');
 
 	}
-	
-	
+
 	public function getIdItem($id_item) {
 		$model= Item::model()->findByPk($id_item);
 		if($model!=null)
@@ -233,21 +237,6 @@ class EventSOController extends Controller
 
 
 
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return EventSO the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model=EventSO::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
 
 	/**
 	 * Performs the AJAX validation.

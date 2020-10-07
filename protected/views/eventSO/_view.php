@@ -25,10 +25,13 @@
 	<?php echo CHtml::encode($data->tgl_berakhir); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('periodeSO')); ?>:</b>
+	<?php echo CHtml::encode($data->periodeSO); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('total_selisih_item')); ?>:</b>
 	<?php echo CHtml::encode($data->total_selisih_item); ?>
 	<br />
-
 
 
 </div>

@@ -9,6 +9,7 @@
  * @property string $nama_item
  * @property string $satuan
  * @property string $lokasi_rak
+ * @property string $item_barcode
  */
 class Item extends CActiveRecord
 {
@@ -30,11 +31,11 @@ class Item extends CActiveRecord
 		return array(
 			array('kode_item, nama_item, satuan, lokasi_rak', 'required'),
 			array('kode_item', 'length', 'max'=>6),
-			array('nama_item, lokasi_rak', 'length', 'max'=>150),
+			array('nama_item, lokasi_rak, item_barcode', 'length', 'max'=>150),
 			array('satuan', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_item, kode_item, nama_item, satuan, lokasi_rak', 'safe', 'on'=>'search'),
+			array('id_item, kode_item, nama_item, satuan, lokasi_rak, item_barcode', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +61,7 @@ class Item extends CActiveRecord
 			'nama_item' => 'Nama Item',
 			'satuan' => 'Satuan',
 			'lokasi_rak' => 'Lokasi Rak',
+			'item_barcode' => 'Item Barcode',
 		);
 	}
 
@@ -86,11 +88,27 @@ class Item extends CActiveRecord
 		$criteria->compare('nama_item',$this->nama_item,true);
 		$criteria->compare('satuan',$this->satuan,true);
 		$criteria->compare('lokasi_rak',$this->lokasi_rak,true);
-
+		$criteria->compare('item_barcode',$this->item_barcode,true);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+	public static function getItemBarcode($valueArray) {
+        $elementId = $valueArray['kode_item'] . "_bcode"; /*the div element id*/
+        $value = $valueArray['barocde'];
+        $type = 'code128'; /* you can set the type dynamically if you want valueArray eg - $valueArray['type']*/
+        self::getBarcode(array('elementId' => $elementId, 'value' => $value, 'type' => $type)); 
+ 		return CHtml::tag('div', array('id' => $elementId));
+	}
+	
+	public static function getBarcode($optionsArray) {
+ 
+        Yii::app()->getController()->widget('ext.Yii-Barcode-Generator.Barcode', $optionsArray);
+	}
+	
+	
+
 
 	/**
 	 * Returns the static model of the specified AR class.

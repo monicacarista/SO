@@ -1,42 +1,28 @@
 <?php
 /* @var $this EventSOController */
-/* @var $dataProvider CActiveDataProvider */
+/* @var $model EventSO */
 
 $this->breadcrumbs=array(
-	'Event Sos',
+	'Event Sos'=>array('index'),
+	'Manage',
 );
 
-if (Yii::app()->user->isAdmin()) {
-
-	//tampilin menu admin
-  
 $this->menu=array(
+	array('label'=>'List EventSO', 'url'=>array('index')),
 	array('label'=>'Create EventSO', 'url'=>array('create')),
-	array('label'=>'Manage EventSO', 'url'=>array('admin')),
-	
-
 );
-  } else {
-  
-	//tampilin menu user biasa
-  
-  }
 
 ?>
 
-<h1>List Event Stock Opname</h1>
+<h1>Manage Event Sos</h1>
+
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'event-so-grid',
 	'dataProvider'=>$dataProvider,
-	
+
 	'columns'=>array(
 		'id_so',
-		array(
-			'name'=>'id_apotek',
-			'header'=>'Nama Apotek',
-			'value'=>'$this->grid->getController()->getIdApotek($data->id_apotek)'
-		),
 		array(
 			'name'=>'id_apoteker',
 			'header'=>'Nama Apoteker',
@@ -44,7 +30,9 @@ $this->menu=array(
 		),
 		'tgl_mulai',
 		'tgl_berakhir',
-		
-		
+		/*
+		'total_selisih_item',
+		*/
+	
 	),
 )); ?>

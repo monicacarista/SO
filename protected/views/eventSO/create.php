@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Daftar Event Stock Opname</h1>
+<h1>Create EventSO</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
