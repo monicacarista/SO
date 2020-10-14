@@ -7,10 +7,6 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List DtlItem', 'url'=>array('index')),
-	array('label'=>'Create DtlItem', 'url'=>array('create')),
-);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -26,11 +22,25 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Dtl Items</h1>
 
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            Manage Event Stock Opname
+        </h3>
+		
+		 <div class="float-lg-right p-2">
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+		</div>		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+			
+		<div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
@@ -62,3 +72,9 @@ $('.search-form form').submit(function(){
 		),
 	),
 )); ?>
+
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  
+

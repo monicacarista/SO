@@ -7,12 +7,26 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'List Pencatatan', 'url'=>array('index')),
-	array('label'=>'Manage Pencatatan', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Create Pencatatan</h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            Create Pencatatan Stock Opname
+        </h3>
+		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+			
+		<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+ 
+        </div>
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  

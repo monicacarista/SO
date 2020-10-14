@@ -1,13 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</head>
+<body>
 <?php
-/* @var $this ItemController */
-/* @var $model Item */
+/* @var $this EventSOController */
+/* @var $model EventSO */
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
-
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'item-form',
+	'id'=>'event-so-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -15,38 +84,60 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model); ?>
+<p class="note">Fields with <span class="required">*</span> are required.</p>
+
+<?php echo $form->errorSummary($model); ?>
+
+<div class="container">
+    <div class="row">
+      <div class="col-25">
+        <label for="kode_item">Kode Item</label>
+      </div>
+      <div class="col-25">
+	  <?php echo $form->textField($model,'kode_item',array('size'=>60,'maxlength'=>15)); ?>
+    </div>
+</div>
+
+
+    <div class="row">
+      <div class="col-25">
+        <label for="nama_item">Nama Item</label>
+      </div>
+      <div class="col-25">
+      <?php echo $form->textField($model,'nama_item',array('size'=>60,'maxlength'=>15)); ?>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-25">
+        <label for="satuan">Satuan</label>
+      </div>
+      <div class="col-25">
+      <?php echo $form->textField($model,'satuan',array('size'=>60,'maxlength'=>15)); ?>
+      </div>
+    </div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'kode_item'); ?>
-		<?php echo $form->textField($model,'kode_item',array('size'=>6,'maxlength'=>6)); ?>
-		<?php echo $form->error($model,'kode_item'); ?>
-	</div>
+      <div class="col-25">
+        <label for="lokasi_rak">Lokasi Rak</label>
+      </div>
+      <div class="col-25">
+      <?php echo $form->textField($model,'lokasi_rak',array('size'=>60,'maxlength'=>15)); ?>
+      </div>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'nama_item'); ?>
-		<?php echo $form->textField($model,'nama_item',array('size'=>60,'maxlength'=>150)); ?>
-		<?php echo $form->error($model,'nama_item'); ?>
-	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'satuan'); ?>
-		<?php echo $form->textField($model,'satuan',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'satuan'); ?>
-	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'lokasi_rak'); ?>
-		<?php echo $form->textField($model,'lokasi_rak',array('size'=>60,'maxlength'=>150)); ?>
-		<?php echo $form->error($model,'lokasi_rak'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
+    
+    <div class="row">
+    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+    </div>
+    
 <?php $this->endWidget(); ?>
+  </form>
+</div>
 
-</div><!-- form -->
+</body>
+</html>

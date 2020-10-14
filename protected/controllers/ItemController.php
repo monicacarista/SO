@@ -6,7 +6,7 @@ class ItemController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/home';
 
 	/**
 	 * @return array action filters
@@ -32,7 +32,7 @@ class ItemController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','create2','scanner'),
+				'actions'=>array('create','update','create2','scanner','scan','qrcode'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -71,7 +71,7 @@ class ItemController extends Controller
 		{
 			$model->attributes=$_POST['Item'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_item));
+				$this->redirect(array('index','id'=>$model->id_item));
 		}
 
 		$this->render('create',array(
@@ -100,6 +100,23 @@ class ItemController extends Controller
 	{
 		
 			$this->render('scanner');
+		
+
+	}
+
+
+	public function actionScan()
+	{
+		
+			$this->render('scan');
+		
+
+	}
+
+	public function actionQrcode()
+	{
+		
+			$this->render('qrcode');
 		
 
 	}

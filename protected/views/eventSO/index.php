@@ -7,32 +7,72 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List EventSO', 'url'=>array('index')),
-	array('label'=>'Create EventSO', 'url'=>array('create')),
-);
 
 ?>
 
-<h1>Manage Event Sos</h1>
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            Event Stock Opname
+        </h3>
+		
+		<?php if (Yii::app()->user->isAdmin()) {
 
+		//tampilin menu admin
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'event-so-grid',
-	'dataProvider'=>$dataProvider,
+		
+		echo '<div class="float-lg-right p-2">
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+		</div>';
+		
+		echo '<div class="float-lg-right p-2">
+        
+            <a href="admin" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Manage</a>
+		</div>';
+		
+		} else {
 
-	'columns'=>array(
-		'id_so',
-		array(
-			'name'=>'id_apoteker',
-			'header'=>'Nama Apoteker',
-			'value'=>'$this->grid->getController()->getIdApoteker($data->id_apoteker)'
-		),
-		'tgl_mulai',
-		'tgl_berakhir',
-		/*
-		'total_selisih_item',
-		*/
-	
-	),
-)); ?>
+		//tampilin menu user biasa
+		
+		echo '<div class="float-lg-right p-2">
+            
+            <a href="eventSO/create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+    	</div>';
+
+		}
+		?>
+
+		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+			
+			<?php $this->widget('zii.widgets.grid.CGridView', array(
+				'id'=>'event-so-grid',
+				'dataProvider'=>$dataProvider,
+
+				'columns'=>array(
+					'id_so',
+					array(
+						'name'=>'id_apoteker',
+						'header'=>'Nama Apoteker',
+						'value'=>'$this->grid->getController()->getIdApoteker($data->id_apoteker)'
+					),
+					'tgl_mulai',
+					'tgl_berakhir',
+					
+					
+				),
+			)); ?>
+<!-- 
+			<?php echo CHtml::link('Create Pencatatan', array('Pencatatan/create')); ?> -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  
+

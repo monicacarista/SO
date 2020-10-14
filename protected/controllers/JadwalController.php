@@ -6,7 +6,7 @@ class JadwalController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/home';
 
 	/**
 	 * @return array action filters
@@ -36,7 +36,7 @@ class JadwalController extends Controller
 			// 	'users'=>array('@'),
 			// ),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('create','admin','delete'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -71,7 +71,7 @@ class JadwalController extends Controller
 		{
 			$model->attributes=$_POST['Jadwal'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_jadwal));
+				$this->redirect(array('index','id'=>$model->id_jadwal));
 		}
 
 		$this->render('create',array(

@@ -6,25 +6,26 @@ $this->breadcrumbs=array(
 	'Items'=>array('index'),
 	'Create',
 );
-
-if (Yii::app()->user->isAdmin()) {
-
-	//tampilin menu admin
-	
-	
-	$this->menu=array(
-		array('label'=>'List Item', 'url'=>array('index')),
-		array('label'=>'Manage Item', 'url'=>array('admin')),
-	);
-	} else {
-	
-	//tampilin menu user biasa
-	$this->menu=array(
-		array('label'=>'List Item', 'url'=>array('index')),
-	);
-	}
 ?>
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            Create Item
+        </h3>
+		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+			
+		<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+ 
+        </div>
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  
 
-<h1>Create Item</h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>

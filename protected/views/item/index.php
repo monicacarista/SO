@@ -6,45 +6,10 @@ $this->breadcrumbs=array(
 	'Items',
 );
 
-if (Yii::app()->user->isAdmin()) {
 
-	//tampilin menu admin
-	
-	
-	$this->menu=array(
-		array('label'=>'Create Item', 'url'=>array('create')),
-		array('label'=>'Manage Item', 'url'=>array('admin')),
-		array('label'=>'Create Detail Item', 'url'=>array('dtlItem/create')),
-	);
-	} else {
-	
-	//tampilin menu user biasa
-	$this->menu=array(
-		array('label'=>'Create Item', 'url'=>array('create')),
-		array('label'=>'Create Detail Item', 'url'=>array('dtlItem/create')),
-	);
-	}
 ?>
-
-
-
-<h1>List Item</h1>
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'event-so-grid',
-	'dataProvider'=>$dataProvider,
-	
-	'columns'=>array(
-		'id_item',
-		'kode_item',
-		'nama_item',
-		'satuan',
-		'lokasi_rak',
-		array('name' => 'item_barcode', 'type' => 'raw', 'value'=>'Item::getItemBarcode(array("kode_item"=> $data->kode_item, "barocde"=>$data->kode_item))'),
-	),
-	
-)); ?>
-<?php echo '<div id="showBarcode"><div>'; //the same id should be given to the extension item id 
+<!-- 
+<?php echo '<div id="showBarcode"><div>'; //the same id should be given to the extension item id  -->
  
 $optionsArray = array(
 'elementId'=> 'showBarcode', /*id of div or canvas*/
@@ -53,5 +18,67 @@ $optionsArray = array(
  
 );
 $this->widget('ext.Yii-Barcode-Generator.Barcode', $optionsArray);
-?>
+?>   -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            List Item
+        </h3>
+		
+		<?php if (Yii::app()->user->isAdmin()) {
+
+		//tampilin menu admin
+
+		
+		echo '<div class="float-lg-right p-2">
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+		</div>';
+		
+		echo '<div class="float-lg-right p-2">
+        
+            <a href="admin" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Manage</a>
+		</div>';
+		
+		} else {
+
+		//tampilin menu user biasa
+		
+		echo '<div class="float-lg-right p-2">
+            
+            <a href="eventSO/create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+    	</div>';
+
+		}
+		?>
+
+		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+		<?php $this->widget('zii.widgets.grid.CGridView', array(
+			'id'=>'event-so-grid',
+			'dataProvider'=>$dataProvider,
+			
+			'columns'=>array(
+				'id_item',
+				'kode_item',
+				'nama_item',
+				'satuan',
+				'lokasi_rak',
+				//array('name' => 'item_barcode', 'type' => 'raw', 'value'=>'Item::getItemBarcode(array("kode_item"=> $data->kode_item, "barocde"=>$data->kode_item))'),
+			),
+			
+			
+		)); ?>
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  
 

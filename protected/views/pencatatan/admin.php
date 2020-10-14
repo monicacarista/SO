@@ -7,11 +7,6 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List Pencatatan', 'url'=>array('index')),
-	array('label'=>'Create Pencatatan', 'url'=>array('create')),
-);
-
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -26,39 +21,57 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Pencatatans</h1>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            Manage Pencatatan Stock Opname
+        </h3>
+		
+		 <div class="float-lg-right p-2">
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+		</div>		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+			
+			
+		<div class="search-form" style="display:none">
+		<?php $this->renderPartial('_search',array(
+			'model'=>$model,
+		)); ?>
+		</div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'pencatatan-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id_pencatatan',
-		array(
-			'name'=>'id_dtl_item',
-			'header'=>'BN',
-			'value'=>'$this->grid->getController()->getBatch($data->id_dtl_item)'
-		),
-		array(
-			'name'=>'id_item',
-			'header'=>'Nama Item',
-			'value'=>'$this->grid->getController()->getItem($data->id_item)'
-		),
-		'stok_tempat',
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+		<?php $this->widget('zii.widgets.grid.CGridView', array(
+			'id'=>'pencatatan-grid',
+			'dataProvider'=>$model->search(),
+			'filter'=>$model,
+			'columns'=>array(
+				'id_pencatatan',
+				array(
+					'name'=>'id_dtl_item',
+					'header'=>'BN',
+					'value'=>'$this->grid->getController()->getBatch($data->id_dtl_item)'
+				),
+				array(
+					'name'=>'id_item',
+					'header'=>'Nama Item',
+					'value'=>'$this->grid->getController()->getItem($data->id_item)'
+				),
+				'stok_tempat',
+				array(
+					'class'=>'CButtonColumn',
+				),
+			),
+		)); ?>
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  

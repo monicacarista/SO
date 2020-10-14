@@ -7,14 +7,14 @@
 // CWebApplication properties can be configured here.
 
 //bootstrap
-Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
+//Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'Stock Opname',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-	'theme' =>'bootstrap',
+//	'theme' =>'bootstrap',
 	
 
 	// autoloading model and component classes
@@ -27,12 +27,15 @@ return array(
 	),
 
 	'modules'=>array(
+		// 'generatorPaths'=>array(
+		// 	'bootstrap.gii',
+		// 	),
 		// uncomment the following to enable the Gii tool
-		'generatorPaths'=>array(
-			'bootstrap.gii',
-		),
+		// 'generatorPaths'=>array(
+		// 	'bootstrap.gii',
+		// ),
 		'gii'=>array(
-		
+			
 		'class'=>'system.gii.GiiModule',
 		'password'=>'000',
 		// If removed, Gii defaults to localhost only. Edit carefully to taste.
@@ -81,6 +84,40 @@ return array(
 				)
 			),
 		),
+
+// 'widgetFactory' => array(
+// 	'widgets' => array(
+// 		'CLinkPager' => array(
+// 			'htmlOptions' => array(
+// 			//'class' => 'pagination'
+// 			),
+// 			'header' => false,
+// 			'maxButtonCount' => 10,
+// 		//'cssFile' => false,
+// 		),
+// 		'CGridView' => array(
+// 			'htmlOptions' => array(
+// 			//	'class' => 'items table-responsive'
+// 			),
+// 			//'pagerCssClass' => 'dataTables_paginate paging_bootstrap',
+// 			//'itemsCssClass' => 'items table-hover table-responsive table-custom',
+// 			'emptyText' => ' Tidak ada data ',
+// 			//'cssFile' => false,
+// 			//'summaryCssClass' => 'dataTables_info',
+// 			'summaryText' => 'Data {start} - {end} dari {count} data',
+// 			'template' => '<div class="row"><div class="col-md-15 col-sm-15">{summary}</div><br>
+// 									 {items}<div class="col-md-10 col-sm-10">{pager}</div></div><br />',
+// 			'pager' => array(
+// 				//'class'          => 'CLinkPager',
+// 				'header' => '',
+// 				'firstPageLabel' => '<<',
+// 				'prevPageLabel' => '<',
+// 				'nextPageLabel' => '>',
+// 				'lastPageLabel' => '>>',
+// 			),
+// 		),
+// 	),
+// ),
 		//...
 	
 	//...
@@ -91,9 +128,9 @@ return array(
 		),
 
 		//bootstrap
-		'bootstrap'=>array(
-			'class'=>'bootstrap.components.Bootstrap',
-			),
+		// 'bootstrap'=>array(
+		// 	'class'=>'bootstrap.components.Bootstrap',
+		// 	),
 
 		// uncomment the following to enable URLs in path-format
 		

@@ -7,10 +7,6 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List EventSO', 'url'=>array('index')),
-	array('label'=>'Create EventSO', 'url'=>array('create')),
-);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -26,41 +22,56 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Event Sos</h1>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'event-so-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id_so',
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            Manage Event Stock Opname
+        </h3>
 		
-		'id_apoteker',
-		array(
-			'name'=>'id_apoteker',
-			'header'=>'Nama Apoteker',
-			'value'=>'$this->grid->getController()->getIdApoteker($data->id_apoteker)'
-		),
-		'tgl_mulai',
-		'tgl_berakhir',
-		'periodeSO',
-		/*
-		'total_selisih_item',
-		*/
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+		 <div class="float-lg-right p-2">
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+		</div>		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+			
+					
+		<div class="search-form" style="display:none">
+		<?php $this->renderPartial('_search',array(
+			'model'=>$model,
+		)); ?>
+		</div><!-- search-form -->
+
+		<?php $this->widget('zii.widgets.grid.CGridView', array(
+			'id'=>'event-so-grid',
+			'dataProvider'=>$model->search(),
+			'filter'=>$model,
+			'columns'=>array(
+				'id_so',
+				
+				'id_apoteker',
+				array(
+					'name'=>'id_apoteker',
+					'header'=>'Nama Apoteker',
+					'value'=>'$this->grid->getController()->getIdApoteker($data->id_apoteker)'
+				),
+				'tgl_mulai',
+				'tgl_berakhir',
+				
+				array(
+					'class'=>'CButtonColumn',
+				),
+			),
+		)); ?>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  
+

@@ -26,7 +26,5 @@ $this->menu=array(
 		'id_apoteker',
 		'tgl_mulai',
 		'tgl_berakhir',
-		'periodeSO',
-		'total_selisih_item',
 	),
 )); ?>
