@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Event Sos'=>array('index'),
-	'Manage',
+	'Index',
 );
 
 
@@ -32,15 +32,16 @@ $this->breadcrumbs=array(
         
             <a href="admin" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Manage</a>
 		</div>';
+
+		echo '<div class="float-lg-right p-2">
+        
+            <a href="report" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Report</a>
+		</div>';
 		
 		} else {
 
 		//tampilin menu user biasa
-		
-		echo '<div class="float-lg-right p-2">
-            
-            <a href="eventSO/create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
-    	</div>';
+	
 
 		}
 		?>

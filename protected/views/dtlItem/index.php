@@ -56,11 +56,7 @@ $this->breadcrumbs=array(
 	
 	'columns'=>array(
 		'id_dtl_item',
-		array(
-			'name'=>'id_apotek',
-			'header'=>'Nama Apotek',
-			'value'=>'$this->grid->getController()->getIdApotek($data->id_apotek)'
-		),
+		
 		array(
 			'name'=>'id_item',
 			'header'=>'Nama Item',

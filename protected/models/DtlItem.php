@@ -30,7 +30,7 @@ class DtlItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_item, id_apotek, batch, stok, exp_date, harga', 'required'),
+			array('id_item, batch, stok, exp_date, harga', 'required'),
 			array('id_item, id_apotek,stok, harga', 'numerical', 'integerOnly'=>true),
 			array('batch', 'length', 'max'=>6),
 			// The following rule is used by search().

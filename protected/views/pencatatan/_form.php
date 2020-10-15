@@ -126,8 +126,11 @@ input[type=submit]:hover {
     $this->widget('ext.select2.ESelect2',array(
       'model'=>$model,
       'attribute'=>'id_dtl_item',
-      'data'=>CHtml::listData(
-        DtlItem::model()->findAll(), 'id_dtl_item', 'batch'),
+      // 'data'=>CHtml::listData(
+      //   DtlItem::model()->findAll(), 'id_dtl_item', 'batch'),
+
+        'data'=>CHtml::listData(
+          DtlItem::model()->findAllBySql('SELECT batch from tbl_dtl_item GROUP BY id_item'), 'batch', 'batch'),
 
       'options'=>array(
 		'placeholder'=>'Pilih Batch Number',

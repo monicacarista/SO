@@ -127,6 +127,12 @@ return array(
 			'class'=>'WebUser',
 		),
 
+		// 'session' => array (
+		// 	'class' => 'system.web.CDbHttpSession',
+		// 	'connectionID' => 'db',
+		// 	'sessionTableName' => 'tbl_pencatatan',
+		// ),
+
 		//bootstrap
 		// 'bootstrap'=>array(
 		// 	'class'=>'bootstrap.components.Bootstrap',

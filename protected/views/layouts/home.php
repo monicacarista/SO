@@ -113,35 +113,38 @@ body {margin:0;font-family:Arial}
 <body>
 
 <div class="topnav" id="myTopnav">
-  <a href="/SO/index.php" class="active">Home</a>
+  <a href="/SO/index.php" >Home</a>
   <a href="/SO/index.php/eventSO/index">Event SO</a>
   <a href="/SO/index.php/pencatatan/index">Pencatatan</a>
   <a href="/SO/index.php/jadwal/index">Jadwal SO</a>
   <a href="/SO/index.php/item/index">Item</a>
   <a href="/SO/index.php/dtlItem/index">Detail Item</a>
-  <a href="/SO/index.php/site/login, 'visible'=>Yii::app()->user->isGuest'">Login</a>
-  <a href="/SO/index.php/site/logout">Logout</a>
- <!-- 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-   -->
+  
+  <?php if (Yii::app()->user->isGuest()) {
+
+    //tampilin menu login 
+   echo '<a href="/SO/index.php/site/login">Login</a>' ;
+
+    } else {
+
+    //tampilin menu logout 
+   echo ' <a href="/SO/index.php/site/logout">Logout</a>' ;
+   
+
+    }
+    ?>
   <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
 </div>
-<!-- <?php if (Yii::app()->user->isGuest()) {
 
-//tampilin menu admin
-
-
-
-} else {
-
-//tampilin menu user biasa
-
-
-
-}
-?> -->
 
 <div style="padding-left:16px">
 <div class="span-19">
+
+<?php if(isset($this->breadcrumbs)):?>
+		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
+			'links'=>$this->breadcrumbs,
+		)); ?><!-- breadcrumbs -->
+	<?php endif?>
 	<div id="content">
 		<?php echo $content; ?>
 	</div><!-- content -->

@@ -29,11 +29,11 @@ class EventSOController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','index','view'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -72,7 +72,7 @@ class EventSOController extends Controller
 		{
 			$model->attributes=$_POST['EventSO'];
 			if($model->save())
-				$this->redirect(array('index','id'=>$model->id_so));
+				$this->redirect(array('view','id'=>$model->id_so));
 		}
 
 		$this->render('create',array(

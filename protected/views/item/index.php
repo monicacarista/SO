@@ -8,17 +8,7 @@ $this->breadcrumbs=array(
 
 
 ?>
-<!-- 
-<?php echo '<div id="showBarcode"><div>'; //the same id should be given to the extension item id  -->
- 
-$optionsArray = array(
-'elementId'=> 'showBarcode', /*id of div or canvas*/
-'value'=> '4797001018719', /* value for EAN 13 be careful to set right values for each barcode type */
-'type'=>'ean13',/*supported types  ean8, ean13, upc, std25, int25, code11, code39, code93, code128, codabar, msi, datamatrix*/
- 
-);
-$this->widget('ext.Yii-Barcode-Generator.Barcode', $optionsArray);
-?>   -->
+
 
 <!-- Main content -->
 <section class="content">
@@ -70,11 +60,23 @@ $this->widget('ext.Yii-Barcode-Generator.Barcode', $optionsArray);
 				'nama_item',
 				'satuan',
 				'lokasi_rak',
-				//array('name' => 'item_barcode', 'type' => 'raw', 'value'=>'Item::getItemBarcode(array("kode_item"=> $data->kode_item, "barocde"=>$data->kode_item))'),
+				array('name' => 'item_barcode', 'type' => 'raw', 'value'=>'Item::getItemBarcode(array("kode_item"=> $data->kode_item, "barocde"=>$data->kode_item))'),
 			),
 			
 			
 		)); ?>
+
+		
+<?php echo '<div id="showBarcode"><div>'; //the same id should be given to the extension item id  -->
+ 
+ $optionsArray = array(
+ 'elementId'=> 'showBarcode', /*id of div or canvas*/
+ 'value'=> '4797001018719', /* value for EAN 13 be careful to set right values for each barcode type */
+ 'type'=>'ean13',/*supported types  ean8, ean13, upc, std25, int25, code11, code39, code93, code128, codabar, msi, datamatrix*/
+  
+ );
+ $this->widget('ext.Yii-Barcode-Generator.Barcode', $optionsArray);
+ ?>  
 
         </div>
         <!-- /.card-body -->

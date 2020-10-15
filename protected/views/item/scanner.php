@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>BridgeIt  Scan </title>
+      
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
       <link rel="icon" type="image/png" href="favicon.png"/>
       <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,23 +56,12 @@
 	    	data-transition="slide" data-direction="reverse" >
 	    	<i class="icon-chevron-left"></i>
 	    </a>
-	    <h1><span class="bridge-font-color">BridgeIt</span></h1>
+	  
 	</div>
 
         <div data-role="content">
-            <div>
-    <h2>Native Scanning</h2>
-    <fieldset class="desc">
-        <div class="row"><p class="normalText">Scan a QR Code with a simple line of JavaScript...</p></div>
-        <div class="row shown-xs">
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">bridgeit</span><span class="p">.</span><span class="nx">scan</span><span class="p">(</span><span class="s1">'myId'</span><span class="p">,</span> 
-  <span class="nx">callback</span><span class="p">);</span></code></pre></figure>
-        </div>
-        <div class="row hidden-xs">
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">bridgeit</span><span class="p">.</span><span class="nx">scan</span><span class="p">(</span><span class="s1">'myId'</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span></code></pre></figure>
-        </div>
-    </fieldset>
-    
+     
+        
     <a id="scanBtn" type="button" class="btn"
         onclick="bridgeit.scan('scanBtn','onAfterCaptureScan');">Scan a Code</a>
         
@@ -83,13 +72,18 @@
         console.log('onAfterCaptureScan: ' + JSON.stringify(event));
         var HTTP = "http";
         var text = event.value;
-        if (HTTP == text.substring(0, HTTP.length))  {
+       
+         if (HTTP == text.substring(0, HTTP.length))  {
+       
             text = "<span class='ellipsis'><a href='" + text + "'>" + text + "</a></span>";
         }
+        
+       
         var scans = document.getElementById("scans");
         var row1 = document.createElement('div');
         row1.setAttribute('class','row timestamp');
         row1.innerHTML = "<span class='ellipsis'>Scanned on " + new Date() + "</span>";
+       // $("#qrcode").val(event)
         var row2 = document.createElement('div');
         row2.setAttribute('class','row');
         row2.innerHTML = text;
@@ -98,17 +92,7 @@
     }
     </script>
 </div>
-
-        </div>
-        	<div data-role="footer" data-id="footer" > 
-	    <a href="#" class="icesoft-link" data-role="none">
-	        <img src="images/icesoft-logo-bw-2x.png"/>
-	    </a>
-		<div class="copyright">&copy;&nbsp;2002-2013 ICEsoft Technologies Inc. All rights reserved.</div>
-		<a href="https://github.com/bridgeit" data-role="none"><i class="icon-github"></i></a>
-		<a href="https://twitter.com/BridgeItApp" data-role="none"><i class="icon-twitter-sign"></i></a>
-		<a href="https://www.facebook.com/bridgeitmobi" data-role="none"><i class="icon-facebook-sign"></i></a>
-	</div> 
+ 
         <script type="text/javascript">
         setMinContentHeight();
         $(document).bind('pageshow', setMinContentHeight);
@@ -122,6 +106,25 @@
         <a id="appStoreLink" href="http://www.icesoft.org/projects/ICEmobile/containers.jsf"
             class="whiteButton bridgeItBtn" onclick="return closeGetBridgeItPopup();" target="_blank">Download the utility app now</a>
     </div>
+</body>
+
+<body>
+<div class="container">
+<div class="row justify-content-center mt-5">
+<div class="col-md-5">
+<div class="card-header bg-transparent mb-o"><h5 class="text center"></h5></div>
+<div class="card-body">
+
+<video id="preview" width="300" height="300"></video>
+<div class="form-group">
+<input type="text" id="qrcode" class="form-control"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
 </body>
 </html>
 

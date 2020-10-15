@@ -28,11 +28,11 @@ class PencatatanController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -70,8 +70,12 @@ class PencatatanController extends Controller
 		if(isset($_POST['Pencatatan']))
 		{
 			$model->attributes=$_POST['Pencatatan'];
+			
 			if($model->save())
-				$this->redirect(array('index','id'=>$model->id_pencatatan));
+			// Yii::app()->session['id_so'] = 'id_so';
+			// echo Yii::app()->session['id_so']; // Prints "value"
+			 
+				$this->redirect(array('view','id'=>$model->id_pencatatan));
 		}
 
 		$this->render('create',array(

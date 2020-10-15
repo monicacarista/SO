@@ -3,7 +3,8 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Pencatatans',
+	'Pencatatan'=>array('index'),
+	'Index',
 );
 
 ?>

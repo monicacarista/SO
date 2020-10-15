@@ -3,17 +3,53 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Event Sos',
+	'Event Sos'=>array('index'),
+	'Report',
 );
 
-$this->menu=array(
-	array('label'=>'Create EventSO', 'url'=>array('create')),
-	array('label'=>'Manage EventSO', 'url'=>array('admin')),
-);
+
 ?>
 
-<h1> Report Stock Opname</h1>
 
+<!-- Main content -->
+<section class="content">
+    <div class="card card-default">
+        <div class="card-header">
+        <h3 class="card-title">
+            <!-- <i class="fas fa-bullhorn"></i> -->
+            Report Stock Opname
+        </h3>
+		
+		<?php if (Yii::app()->user->isAdmin()) {
+
+		//tampilin menu admin
+
+		
+		echo '<div class="float-lg-right p-2">
+            <a href="report1" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Export to .csv</a>
+		</div>';
+		
+		echo '<div class="float-lg-right p-2">
+        
+            <a href="PDF2" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Export to .pdf</a>
+		</div>';
+
+	
+		} else {
+
+		//tampilin menu user biasa
+	
+
+		}
+		?>
+
+		
+        </div>
+		
+        <!-- /.card-header -->
+        <div class="card-body">
+			
+			
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'event-so-grid',
 	'dataProvider'=>$dataProvider1,
@@ -65,9 +101,10 @@ $this->menu=array(
 		
 	),
 )); ?>
-<!-- <?php echo CHtml::beginForm(array('EventSO/report1')); ?> -->
 
-<?php echo CHtml::submitButton('Export to .csv', array('submit'=>array('EventSO/report1'))); ?>
-
-<?php echo CHtml::submitButton('Export to .pdf', array('submit' => array('EventSO/PDF2'))); ?>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</section>
+<!-- /.content -->  
 

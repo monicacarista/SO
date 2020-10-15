@@ -117,29 +117,13 @@ input[type=submit]:hover {
 
 
 		<div class="row">
-		<div class="col-25">
-			<label for="id_dtl_item">Batch Number</label>
-		</div>
-		<div class="col-25">
-		<?php 
-			$this->widget('ext.select2.ESelect2',array(
-			'model'=>$model,
-			'attribute'=>'id_dtl_item',
-			'data'=>CHtml::listData(
-			DtlItem::model()->findAll(), 'id_dtl_item', 'batch'),
-
-			'options'=>array(
-			'placeholder'=>'Pilih Batch Number',
-			'allowClear'=>true,
-			),
-			'htmlOptions'=>array(						
-			'options'=>array(''=>array('value'=>null,'selected'=>null),
-			),
-			),		
-			)); 
-		?>
-		</div>
-		</div>
+      <div class="col-25">
+        <label for="batch">Batch Number</label>
+      </div>
+      <div class="col-25">
+      <?php echo $form->textField($model,'batch',array('size'=>60,'maxlength'=>15)); ?>
+      </div>
+    </div>
 
 
 		<div class="row">
@@ -167,6 +151,15 @@ input[type=submit]:hover {
       </div>
       <div class="col-25">
       <?php echo $form->textField($model,'stok',array('size'=>60,'maxlength'=>15)); ?>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="harga">Harga</label>
+      </div>
+      <div class="col-25">
+      <?php echo $form->textField($model,'harga',array('size'=>60,'maxlength'=>15)); ?>
       </div>
     </div>
 

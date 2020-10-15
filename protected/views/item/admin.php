@@ -58,6 +58,7 @@ $('.search-form form').submit(function(){
 				'nama_item',
 				'satuan',
 				'lokasi_rak',
+				array('name' => 'item_barcode', 'type' => 'raw', 'value'=>'Item::getItemBarcode(array("kode_item"=> $data->kode_item, "barocde"=>$data->kode_item))'),
 				array(
 					'class'=>'CButtonColumn',
 				),
