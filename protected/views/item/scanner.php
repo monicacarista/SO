@@ -3,16 +3,16 @@
 <html>
    <head>
       
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+      <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
       <link rel="icon" type="image/png" href="favicon.png"/>
       <meta name="apple-mobile-web-app-capable" content="yes" />
-      
-      <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,600,300,400' rel='stylesheet' type='text/css'/>
+       -->
+      <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,600,300,400' rel='stylesheet' type='text/css'/>
       <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"/>
       <link rel="stylesheet" href="css/mobile.css" type="text/css" />
       <link rel="stylesheet" href="css/syntax.css" type="text/css" />
-      
+       -->
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=geometry"></script>
       <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
       <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
@@ -83,7 +83,7 @@
         var row1 = document.createElement('div');
         row1.setAttribute('class','row timestamp');
         row1.innerHTML = "<span class='ellipsis'>Scanned on " + new Date() + "</span>";
-       // $("#qrcode").val(event)
+        $("#qrcode").val(text)
         var row2 = document.createElement('div');
         row2.setAttribute('class','row');
         row2.innerHTML = text;
@@ -108,9 +108,9 @@
     </div>
 </body>
 
-<body>
+ <body>
 <div class="container">
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-left mt-5">
 <div class="col-md-5">
 <div class="card-header bg-transparent mb-o"><h5 class="text center"></h5></div>
 <div class="card-body">
@@ -125,6 +125,7 @@
 </div>
 
 
+ 
 </body>
 </html>
 

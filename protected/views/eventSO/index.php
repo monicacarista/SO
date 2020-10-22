@@ -57,6 +57,12 @@ $this->breadcrumbs=array(
 				'dataProvider'=>$dataProvider,
 
 				'columns'=>array(
+					array('name'=>'no',
+					'type'=>'raw',
+					'header' => 'No ',		
+					'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+					'filter' => '',		
+					),
 					'id_so',
 					array(
 						'name'=>'id_apoteker',
@@ -65,12 +71,23 @@ $this->breadcrumbs=array(
 					),
 					'tgl_mulai',
 					'tgl_berakhir',
-					
+					array(
+						//'name'=>'',
+						'header'=>'Action', //column header
+						'type' =>'raw',
+						'value' =>
+						'(CHtml::link("<i class=\"fa fa-plus fa-lg\" style=\"color:#333333;\"></i> ",
+								Yii::app()->request->baseUrl."/pencatatan/create/".$data->id_so,
+								array("class"=>"btn btn-mini", "style"=>"color:#333333;  margin-bottom:3px; margin-right:5px;")))',
+		
+						
+						'htmlOptions'=>array('width'=>'200px', 'style'=>'text-align:center;')
+				),
 					
 				),
 			)); ?>
-<!-- 
-			<?php echo CHtml::link('Create Pencatatan', array('Pencatatan/create')); ?> -->
+
+		
         </div>
         <!-- /.card-body -->
     </div>

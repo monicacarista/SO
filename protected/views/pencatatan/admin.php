@@ -52,7 +52,12 @@ $('.search-form form').submit(function(){
 			'dataProvider'=>$model->search(),
 			'filter'=>$model,
 			'columns'=>array(
-				'id_pencatatan',
+				array('name'=>'no',
+				'type'=>'raw',
+				'header' => 'No ',		
+				'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+				'filter' => '',		
+				),
 				array(
 					'name'=>'id_dtl_item',
 					'header'=>'BN',

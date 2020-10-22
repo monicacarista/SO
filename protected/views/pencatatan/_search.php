@@ -32,6 +32,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'kode_item'); ?>
+		<?php echo $form->textField($model,'kode_item'); ?>
+	</div>
+
+
+	<div class="row">
 		<?php echo $form->label($model,'stok_tempat'); ?>
 		<?php echo $form->textField($model,'stok_tempat'); ?>
 	</div>

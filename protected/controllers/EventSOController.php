@@ -68,10 +68,13 @@ class EventSOController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		
 		if(isset($_POST['EventSO']))
 		{
+			
 			$model->attributes=$_POST['EventSO'];
 			if($model->save())
+			Yii::app()->user->setState('id_so', $model->id_so);
 				$this->redirect(array('view','id'=>$model->id_so));
 		}
 

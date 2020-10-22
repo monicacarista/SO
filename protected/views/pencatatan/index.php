@@ -56,6 +56,12 @@ $this->breadcrumbs=array(
 	'id'=>'pencatatan-grid',
 	'dataProvider'=>$dataProvider,
 	'columns'=>array(
+		array('name'=>'no',
+		'type'=>'raw',
+		'header' => 'No ',		
+		'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+		'filter' => '',		
+		),
 		'id_pencatatan',
 		array(
 			'name'=>'id_dtl_item',
@@ -67,6 +73,7 @@ $this->breadcrumbs=array(
 			'header'=>'Nama Item',
 			'value'=>'$this->grid->getController()->getItem($data->id_item)'
 		),
+		'kode_item',
 		'stok_tempat',
 	
 	),

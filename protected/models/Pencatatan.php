@@ -30,11 +30,11 @@ class Pencatatan extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array(' id_item, stok_tempat, id_dtl_item', 'required'),
-			array('id_so, id_item, stok_tempat', 'numerical', 'integerOnly'=>true),
+			array('id_so, stok_tempat', 'numerical', 'integerOnly'=>true),
 			array('id_dtl_item', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_pencatatan, id_so, id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
+			array('id_pencatatan, id_so, kode_item,id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +59,7 @@ class Pencatatan extends CActiveRecord
 			'id_so' => 'Id So',
 			'id_jadwal' => 'Id Jadwal',
 			'id_item' => 'Id Item',
+			'kode_item' => 'Kode Item',
 			'stok_tempat' => 'Stok Tempat',
 			'id_dtl_item' => 'Id Dtl Item',
 		);
@@ -86,12 +87,25 @@ class Pencatatan extends CActiveRecord
 		$criteria->compare('id_so',$this->id_so);
 		$criteria->compare('id_jadwal',$this->id_jadwal,true);
 		$criteria->compare('id_item',$this->id_item);
+		$criteria->compare('kode_item',$this->kode_item);
 		$criteria->compare('stok_tempat',$this->stok_tempat);
 		$criteria->compare('id_dtl_item',$this->id_dtl_item,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function searchPeriode(){
+		//$data=array();
+		$sm = 'select monthname(tgl_mulai), year(tgl_mulai) from tbl_event_so';
+		$dataProvider3=new CSqlDataProvider($sm, array(
+			'keyField'=>'id_so',
+			'pagination'=>array(
+				'pageSize'=>25,
+			),
+		));
+		return $dataProvider3;
 	}
 	
 

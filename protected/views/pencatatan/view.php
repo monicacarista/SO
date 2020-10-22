@@ -23,6 +23,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'id_pencatatan',
 		'id_item',
+		'kode_item',
 		'id_dtl_item',
 		'stok_tempat',
 	),

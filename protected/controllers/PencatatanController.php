@@ -32,7 +32,7 @@ class PencatatanController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view','create','update'),
+				'actions'=>array('index','view','create','update','pilihID','createManual'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -65,12 +65,12 @@ class PencatatanController extends Controller
 		$model=new Pencatatan;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+	 //$this->performAjaxValidation($model);
 
 		if(isset($_POST['Pencatatan']))
 		{
 			$model->attributes=$_POST['Pencatatan'];
-			
+			$id=Yii::app()->user->getState('id_so'); //it is better to check it via has state, and also passing a default value 
 			if($model->save())
 			// Yii::app()->session['id_so'] = 'id_so';
 			// echo Yii::app()->session['id_so']; // Prints "value"
@@ -83,6 +83,7 @@ class PencatatanController extends Controller
 		));
 	}
 
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -178,6 +179,22 @@ class PencatatanController extends Controller
 			return $model->nama_item;
 		}
 		return "";
+	}
+
+	public function actionPilihID(){
+		$kode_item = $_GET["id_item"];
+		$nama = Yii::app()->db->createCommand()
+							->select('*')
+							->from('tbl_item')
+							->where('kode_item=:kode_item',array(':kode_item'=>$kode_item))
+							->queryRow();
+		
+		echo CJSON::encode(array(
+			'error'=>'false',
+			'nama_item'=>$nama["nama_item"],
+			'id_item'=>$nama["id_item"],
+		));
+		Yii::app()->end();
 	}
 
 	/**

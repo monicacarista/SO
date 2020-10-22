@@ -55,7 +55,12 @@ $this->breadcrumbs=array(
 			'dataProvider'=>$dataProvider,
 			
 			'columns'=>array(
-				'id_item',
+				array('name'=>'no',
+				'type'=>'raw',
+				'header' => 'No ',		
+				'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+				'filter' => '',		
+				),
 				'kode_item',
 				'nama_item',
 				'satuan',
