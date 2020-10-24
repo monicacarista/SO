@@ -74,7 +74,7 @@ class EventSOController extends Controller
 			
 			$model->attributes=$_POST['EventSO'];
 			if($model->save())
-			Yii::app()->user->setState('id_so', $model->id_so);
+			//Yii::app()->user->setState('id_so', $model->id_so);
 				$this->redirect(array('view','id'=>$model->id_so));
 		}
 

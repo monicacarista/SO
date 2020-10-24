@@ -211,23 +211,59 @@ input[type=submit]:hover {
       </div>
     </div>
 
-      <div class="row">
-      <div class="col-25"> 
+  <div class="row">
+       <div class="col-md-4 col-lg-2">
     <a id="scanBtn" type="button" class=" btn btn-success btn-sm btn-block "
         onclick="bridgeit.scan('scanBtn','onAfterCaptureScan');">Scan a Code</a>
       </div>
-      </div>
+   </div>
 
-    <div class="row">
+  
+
+
+   <div class="row">
       <div class="col-25">
-        <label for="nama_item">Nama Item</label>
+        <label for="id_item">Nama Item</label>
       </div>
       <div class="col-75">
-        <input id="nama_item" >
-    <?php echo $form->hiddenField($model,'id_item', array('id'=>'id_item')); ?>
+            <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+        'name'=>'nama_item',
+        'attribute' => 'id_item',
+        'id'=>'nama_item',
+        'value'=>$model->id_item ? $model->item->nama_item:'',
+        'source'=>'js: function(request, response) {
+          $.ajax({
+            url: "'.$this->createUrl('Pencatatan/cariitem').'",
+            dataType: "json",
+            data: {
+              term: request.term,
+              brand: $("#Pencatatan_id_item").val()
+            },
+            success: function (data) {
+              response(data);
+            }
+          })
+        }',
+        //'sourceUrl' => array('carianggota'),
+        //'source'=>$this->createUrl('kegiatan/carianggota'),
+        'options'=>array(
+          'minLength'=>'1',
+          'focus'=> 'js:function( event, ui ) {
+            $("#'.CHtml::activeId($model,'id_item').'").val(ui.item.label);
+            return false;
+          }',
+          'search'=>"js: function(event, ui) {
+            $('#Pencatatan_id_item').val('');
+          }",
+          'select'=>'js:function( event, ui ) {
+            $("#'.CHtml::activeId($model,'id_item').'").val(ui.item.id);
+          }', 
+        ),
+      ));
+      ?> 
+     <?php echo $form->hiddenField($model,'id_item', array('id'=>'id_item')); ?>
       </div>
     </div>
-
 
   <script type = "text/javascript">
   function selectID(){
@@ -240,8 +276,16 @@ input[type=submit]:hover {
       'data': data,
       'success': function(data){
            $('#nama_item').val(data.nama_item);
+        // $( 'select#Pencatatan_id_item ' ).val(data.nama_item);
+          //  $('#Pencatatan_id_item').change(function() {
+          //   var selected  = $(this).val(); 
+          //   var textValue = $this.text();
+          // });
+          
            $('#id_item').val(data.id_item);
-        //alert(data.nama_item);
+          //  console.log(data.nama_item);
+          //  console.log(data.id_item);
+       // alert(data.nama_item);
 
       },
       'error':function(data){
@@ -250,6 +294,10 @@ input[type=submit]:hover {
     });
       }
   </script>
+
+
+
+
 
     <div class="row">
       <div class="col-25">
@@ -287,10 +335,9 @@ input[type=submit]:hover {
 
     <div class="row">
      <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?> 
- 
     </div>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
   </form>
 
   

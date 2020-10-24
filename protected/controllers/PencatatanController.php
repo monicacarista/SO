@@ -32,7 +32,7 @@ class PencatatanController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view','create','update','pilihID','createManual'),
+				'actions'=>array('index','view','create','update','pilihID','AutoCompleteAjax','cariitem'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -44,6 +44,19 @@ class PencatatanController extends Controller
 			),
 		);
 	}
+
+	public function actionCariitem() 
+{
+   $res =array();
+   if (isset($_GET['term'])) {
+     $qtxt ="SELECT nama_item as label, id_item FROM tbl_item WHERE nama_item LIKE :name ORDER BY nama_item LIMIT 20";
+     $command =Yii::app()->db->createCommand($qtxt);
+     $command->bindValue(":name", '%'.$_GET['term'].'%', PDO::PARAM_STR);
+     $res =$command->queryAll();
+   }
+   echo CJSON::encode($res);
+}
+
 
 	/**
 	 * Displays a particular model.
@@ -70,7 +83,7 @@ class PencatatanController extends Controller
 		if(isset($_POST['Pencatatan']))
 		{
 			$model->attributes=$_POST['Pencatatan'];
-			$id=Yii::app()->user->getState('id_so'); //it is better to check it via has state, and also passing a default value 
+		//	$id=Yii::app()->user->getState('id_so'); //it is better to check it via has state, and also passing a default value 
 			if($model->save())
 			// Yii::app()->session['id_so'] = 'id_so';
 			// echo Yii::app()->session['id_so']; // Prints "value"
@@ -181,6 +194,10 @@ class PencatatanController extends Controller
 		return "";
 	}
 
+
+
+
+
 	public function actionPilihID(){
 		$kode_item = $_GET["id_item"];
 		$nama = Yii::app()->db->createCommand()
@@ -193,8 +210,21 @@ class PencatatanController extends Controller
 			'error'=>'false',
 			'nama_item'=>$nama["nama_item"],
 			'id_item'=>$nama["id_item"],
+		
 		));
 		Yii::app()->end();
+	}
+
+	public function actionAutoCompleteAjax()
+	{
+		$request=trim($_GET['term']);
+		if($request!=''){
+			$model=Item::model()->findAll(array("condition"=>"nama_item like '$request%'"));
+			$data=array();
+			foreach($model as $get){
+				$data[]=$get->nama_item;
+			}
+		}
 	}
 
 	/**

@@ -32,11 +32,19 @@ class Pencatatan extends CActiveRecord
 			array(' id_item, stok_tempat, id_dtl_item', 'required'),
 			array('id_so, stok_tempat', 'numerical', 'integerOnly'=>true),
 			array('id_dtl_item', 'length', 'max'=>11),
+		//	array('id_item','checkItem'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_pencatatan, id_so, kode_item,id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
 		);
 	}
+// 	public function checkItem($attribute,$params)
+// {
+//    $record=Item::model()->findByAttributes(array('id_item'=>$this->attributes['id_item']));
+//    if($record===null){
+//       $this->addError($attribute, 'Invalid Item');
+//    }
+// }
 
 	/**
 	 * @return array relational rules.
