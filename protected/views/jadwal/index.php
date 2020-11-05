@@ -46,7 +46,6 @@ $this->breadcrumbs=array(
 		
         <!-- /.card-header -->
         <div class="card-body">
-		echo session_id();
 		<?php $this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'jadwal-grid',
 		'dataProvider'=>$dataProvider,

@@ -152,9 +152,12 @@ input[type=submit]:hover {
      ?>
       </div>
     </div>
+    
+    <br>
 
     
     <div class="row">
+    
     <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
     

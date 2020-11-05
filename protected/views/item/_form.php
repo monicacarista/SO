@@ -127,7 +127,7 @@ input[type=submit]:hover {
       <?php echo $form->textField($model,'lokasi_rak',array('size'=>60,'maxlength'=>15)); ?>
       </div>
     </div>
-
+  <br>
 
 
     

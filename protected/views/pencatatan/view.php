@@ -3,27 +3,22 @@
 /* @var $model Pencatatan */
 
 $this->breadcrumbs=array(
-	'Pencatatans'=>array('index'),
+	'Pencatatans'=>array('/eventSO/admin'),
 	$model->id_pencatatan,
 );
 
-$this->menu=array(
-	array('label'=>'List Pencatatan', 'url'=>array('index')),
-	array('label'=>'Create Pencatatan', 'url'=>array('create')),
-	array('label'=>'Update Pencatatan', 'url'=>array('update', 'id'=>$model->id_pencatatan)),
-	array('label'=>'Delete Pencatatan', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id_pencatatan),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Pencatatan', 'url'=>array('admin')),
-);
 ?>
-
 <h1>View Pencatatan #<?php echo $model->id_pencatatan; ?></h1>
 
+<div class="float-lg-right p-2">
+            
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+    	</div>
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id_pencatatan',
 		'id_item',
-		'kode_item',
 		'id_dtl_item',
 		'stok_tempat',
 	),

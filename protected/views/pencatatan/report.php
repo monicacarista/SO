@@ -26,12 +26,12 @@ $this->breadcrumbs=array(
 
 		
 		echo '<div class="float-lg-right p-2">
-            <a href="report1" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Export to .csv</a>
+            <a href="/SO/pencatatan/report1" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Export to .csv</a>
 		</div>';
 		
 		echo '<div class="float-lg-right p-2">
         
-            <a href="PDF2" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Export to .pdf</a>
+            <a href="/SO/pencatatan/PDF2" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Export to .pdf</a>
 		</div>';
 
 	
@@ -51,7 +51,7 @@ $this->breadcrumbs=array(
 			
 			
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'event-so-grid',
+	'id'=>'pencatatan-grid',
 	'dataProvider'=>$dataProvider1,
 'columns'=>array(
    

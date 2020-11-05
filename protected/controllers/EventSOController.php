@@ -16,7 +16,7 @@ class EventSOController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -37,7 +37,7 @@ class EventSOController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','report1','report','PDF','tes','PDF2','getPDF2','export','tampil'),
+				'actions'=>array('admin','delete','report1','report','PDF','tes','PDF2','getPDF2','export','tampil','reportSelisih','perso'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -115,10 +115,10 @@ class EventSOController extends Controller
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
-
+		
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 	}
 
 	/**
@@ -139,6 +139,7 @@ class EventSOController extends Controller
 	{
 		$model=new EventSO('search');
 		$model->unsetAttributes();  // clear any default values
+		
 		if(isset($_GET['EventSO']))
 			$model->attributes=$_GET['EventSO'];
 
@@ -162,21 +163,13 @@ class EventSOController extends Controller
 		return $model;
 	}
 
-	public function actionReport()
-	{
-		$dataProvider1=EventSO::model()->getTes();
-	//	$dataProvider2=EventSO::model()->getReportIDSO();
-		$this->render('report', array(
-			'dataProvider1'=>$dataProvider1,
-		//	'dataProvider2'=>$dataProvider2,
-
-		));
-	}
+	
 
 	public function actionTes()
 	{
 		$dataProvider1=EventSO::model()->getTes();
-	//	$dataProvider2=EventSO::model()->getReportIDSO();
+		
+		$model->id_so=Yii::app()->user->getState('id_so');
 		$this->render('report', array(
 			'dataProvider1'=>$dataProvider1,
 		//	'dataProvider2'=>$dataProvider2,
@@ -184,7 +177,7 @@ class EventSOController extends Controller
 		));
 
 	}
-
+	
 	public function actionPDF2()
 	{
 	require_once 'C:\xampp\htdocs\SO\vendor\autoload.php' ;
@@ -236,11 +229,6 @@ class EventSOController extends Controller
 			'model'=>$model,
 		));
 	}
-
-
-
-
-
 
 	/**
 	 * Performs the AJAX validation.

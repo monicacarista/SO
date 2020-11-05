@@ -29,7 +29,7 @@ $('.search-form form').submit(function(){
         <div class="card-header">
         <h3 class="card-title">
             <!-- <i class="fas fa-bullhorn"></i> -->
-            Manage Event Stock Opname
+            Manage Item
         </h3>
 		
 		 <div class="float-lg-right p-2">

@@ -122,25 +122,25 @@ input[type=submit]:hover {
 			<label for="password">Password</label>
 		</div>
 		<div class="col-25">
-		<?php echo $form->passwordField($model,'password'); ?>
+		<?php echo $form->passwordField($model,'password', array('size'=>60,'maxlength'=>255, 'class'=> 'form-control input-inline input-medium')); ?>
 		</div>
 		</div>
 
-		<div class="row rememberMe">
+		<!-- <div class="row rememberMe">
     <div class="col-sm-offset-2 col-sm-10">
         <div class="checkbox">
           <label><?php echo $form->checkBox($model,'rememberMe'); ?> Remember me</label>
         </div>
       </div>
 
-		</div>
+		</div> -->
 
    
 		
     <div class="row">
     <?php echo CHtml::link('Don`t have account',array('user/create'),array('class'=>'btn_signin')); ?>
     </div>
-
+    <br>
     <div class="row">
     <?php echo CHtml::submitButton('Login'); ?>
     </div>

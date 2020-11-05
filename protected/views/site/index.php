@@ -211,7 +211,7 @@
      
     </div>
     <div class="col-sm-4">
-      <span class="glyphicon glyphicon-signal logo"></span>
+      <img class="img-fluid" src="logo.jpg" alt="Logo" width="460" height="345">
     </div>
   </div>
 </div>

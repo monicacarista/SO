@@ -32,6 +32,11 @@ $this->breadcrumbs=array(
         
             <a href="admin" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Manage</a>
 		</div>';
+		echo '<div class="float-lg-right p-2">
+        
+            <a href="/SO/pencatatan/reportItem" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Report Item</a>
+		</div>';
+		
 		
 		} else {
 
@@ -39,7 +44,7 @@ $this->breadcrumbs=array(
 		
 		echo '<div class="float-lg-right p-2">
             
-            <a href="eventSO/create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
     	</div>';
 
 		}
@@ -65,7 +70,7 @@ $this->breadcrumbs=array(
 				'nama_item',
 				'satuan',
 				'lokasi_rak',
-				array('name' => 'item_barcode', 'type' => 'raw', 'value'=>'Item::getItemBarcode(array("kode_item"=> $data->kode_item, "barocde"=>$data->kode_item))'),
+				array('name' => 'item_barcode', 'type' => 'raw', 'value'=>'Item::getIdBarcode(array("id_item"=> $data->id_item, "barocde"=>$data->id_item))'),
 			),
 			
 			

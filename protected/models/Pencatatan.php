@@ -13,6 +13,7 @@
  */
 class Pencatatan extends CActiveRecord
 {
+	public $nama_item;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,7 +36,7 @@ class Pencatatan extends CActiveRecord
 		//	array('id_item','checkItem'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_pencatatan, id_so, kode_item,id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
+			array('id_pencatatan, id_so,id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
 		);
 	}
 // 	public function checkItem($attribute,$params)
@@ -54,6 +55,7 @@ class Pencatatan extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'tbl_item'=>array(self::HAS_MANY, 'Item', 'id_item'),
 		);
 	}
 
@@ -67,7 +69,6 @@ class Pencatatan extends CActiveRecord
 			'id_so' => 'Id So',
 			'id_jadwal' => 'Id Jadwal',
 			'id_item' => 'Id Item',
-			'kode_item' => 'Kode Item',
 			'stok_tempat' => 'Stok Tempat',
 			'id_dtl_item' => 'Id Dtl Item',
 		);
@@ -95,7 +96,6 @@ class Pencatatan extends CActiveRecord
 		$criteria->compare('id_so',$this->id_so);
 		$criteria->compare('id_jadwal',$this->id_jadwal,true);
 		$criteria->compare('id_item',$this->id_item);
-		$criteria->compare('kode_item',$this->kode_item);
 		$criteria->compare('stok_tempat',$this->stok_tempat);
 		$criteria->compare('id_dtl_item',$this->id_dtl_item,true);
 
@@ -103,18 +103,85 @@ class Pencatatan extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	public static function usersAutoComplete($name='') {
 
-	public function searchPeriode(){
-		//$data=array();
-		$sm = 'select monthname(tgl_mulai), year(tgl_mulai) from tbl_event_so';
-		$dataProvider3=new CSqlDataProvider($sm, array(
+		// Recommended: Secure Way to Write SQL in Yii 
+    $sql= 'SELECT id_item ,nama_item AS label FROM tbl_item WHERE nama_item LIKE :name';
+		$name = $name.'%';
+		return Yii::app()->db->createCommand($sql)->queryAll(true,array(':name'=>$name));
+
+		// Not Recommended: Simple Way for those who can't understand the above way.
+    // Uncomment the below and comment out above 3 lines 
+    /*
+    $sql= "SELECT id ,title AS label FROM users WHERE title LIKE '$name%'";
+		return Yii::app()->db->createCommand($sql)->queryAll();
+    */
+    
+	}
+	public function getTes(){
+		$sql2='SELECT *, (jml_stok_tem - jml_stok)as ttl_selisih_item, (jml_stok_tem - jml_stok)*harga as selisih_harga
+		FROM
+		(
+		SELECT i.id_item, i.nama_item, satuan, SUM(stok) AS jml_stok, harga FROM tbl_dtl_item d
+		LEFT JOIN tbl_item i ON i.id_item = d.id_item 
+		GROUP BY id_item) AS xxx
+		LEFT JOIN
+		(
+		SELECT i.id_item, i.nama_item, id_so, SUM(stok_tempat) AS jml_stok_tem FROM tbl_pencatatan p
+		LEFT JOIN tbl_item i ON i.id_item = p.id_item
+		GROUP BY i.id_item) AS yyy 
+		ON xxx.id_item = yyy.id_item
+	    WHERE  id_so =  :id 
+
+		';
+
+		$dataProvider1=new CSqlDataProvider($sql1, array(
+			'params' => array(':id' =>Yii::app()->user->getState('id_so')),
 			'keyField'=>'id_so',
 			'pagination'=>array(
 				'pageSize'=>25,
 			),
 		));
-		return $dataProvider3;
+		return $dataProvider1;
 	}
+
+	public function getItemReport(){
+		$sql2='SELECT tbl_dtl_item.id_item , i.nama_item, i.lokasi_rak, exp_date from tbl_item i, tbl_dtl_item where exp_date < curdate() group by i.nama_item;
+
+		';
+
+		$dataProvider2=new CSqlDataProvider($sql2, array(
+			'keyField'=>'id_item',
+			'pagination'=>array(
+				'pageSize'=>25,
+			),
+		));
+		return $dataProvider2;
+	}
+
+
+	
+
+	public function reportSe()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='tbl.*, i.nama_item';
+		$criteria->alias='tbl';
+		$criteria->join=' JOIN tbl_item  i';
+		
+		$criteria->condition="tbl.id_so=:id";
+		
+		$criteria->params=array(':id'=>$this->id_so);
+		$criteria->together = true; // ADDED THIS
+		$criteria->limit = 10;
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	
+	}
+
 	
 
 	/**

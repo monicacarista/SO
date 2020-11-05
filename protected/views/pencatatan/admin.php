@@ -3,7 +3,7 @@
 /* @var $model Pencatatan */
 
 $this->breadcrumbs=array(
-	'Pencatatans'=>array('index'),
+	'Pencatatans'=>array('admin'),
 	'Manage',
 );
 
@@ -29,12 +29,13 @@ $('.search-form form').submit(function(){
         <div class="card-header">
         <h3 class="card-title">
             <!-- <i class="fas fa-bullhorn"></i> -->
-            Manage Pencatatan Stock Opname
+           Detail Pencatatan
         </h3>
 		
 		 <div class="float-lg-right p-2">
-            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
-		</div>		
+            <a href="<?php echo Yii::app()->request->baseUrl?>/pencatatan/create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+		</div>
+		
         </div>
 		
         <!-- /.card-header -->

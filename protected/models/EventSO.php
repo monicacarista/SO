@@ -108,7 +108,9 @@ class EventSO extends CActiveRecord
 		SELECT i.id_item, i.nama_item, id_so, SUM(stok_tempat) AS jml_stok_tem FROM tbl_pencatatan p
 		LEFT JOIN tbl_item i ON i.id_item = p.id_item
 		GROUP BY i.id_item) AS yyy 
-		ON xxx.id_item = yyy.id_item ';
+		ON xxx.id_item = yyy.id_item
+		
+		';
 		$dataProvider1=new CSqlDataProvider($sql1, array(
 			'keyField'=>'id_so',
 			'pagination'=>array(
@@ -118,18 +120,19 @@ class EventSO extends CActiveRecord
 		return $dataProvider1;
 	}
 
-
-	public function searchApoteker() {
-		$data         = array();
-		$packageModel = Apoteker::model()->findAll();
-		foreach($packageModel as $get){
-			$data[] = $get->nama_apoteker;
-		}
-		return $data;
-		Yii::app()->end();
+	public function reportSe()
+	{
+		
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='t.id_so, xxx.id_pencatatan, xxx.stok_tempat';
+		$criteria->join=" JOIN tbl_pencatatan as xxx ON (t.id_so=xxx.id_so)";
+		
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	
 	}
-
-
 
 	/**
 	 * Returns the static model of the specified AR class.

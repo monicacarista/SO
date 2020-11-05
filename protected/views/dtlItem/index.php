@@ -37,7 +37,7 @@ $this->breadcrumbs=array(
 		
 		echo '<div class="float-lg-right p-2">
             
-            <a href="eventSO/create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
+            <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
     	</div>';
 
 		}
@@ -70,7 +70,11 @@ $this->breadcrumbs=array(
 		'batch',
 		'stok',
 		'exp_date',	
-		'harga',
+		array(
+			'name'=>'harga',
+			'header'=>'Harga Per Item',
+			'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["harga"])',
+		),
 			
 		
 	),

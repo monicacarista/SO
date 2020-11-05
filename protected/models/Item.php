@@ -101,7 +101,13 @@ class Item extends CActiveRecord
         self::getBarcode(array('elementId' => $elementId, 'value' => $value, 'type' => $type)); 
  		return CHtml::tag('div', array('id' => $elementId));
 	}
-	
+	public static function getIdBarcode($valueArray) {
+        $elementId = $valueArray['id_item'] . "_bcode"; /*the div element id*/
+        $value = $valueArray['barocde'];
+        $type = 'code128'; /* you can set the type dynamically if you want valueArray eg - $valueArray['type']*/
+        self::getBarcode(array('elementId' => $elementId, 'value' => $value, 'type' => $type)); 
+ 		return CHtml::tag('div', array('id' => $elementId));
+	}
 	public static function getBarcode($optionsArray) {
  
         Yii::app()->getController()->widget('ext.Yii-Barcode-Generator.Barcode', $optionsArray);

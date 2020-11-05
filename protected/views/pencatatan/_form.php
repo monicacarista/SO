@@ -171,13 +171,13 @@ input[type=submit]:hover {
             var row1 = document.createElement('div');
             row1.setAttribute('class','row timestamp');
             row1.innerHTML = "<span class='ellipsis'>Scanned on " + new Date() + "</span>";
-            $("#id_item1").val(text)
+            $("#Pencatatan_id_item").val(text)
             var row2 = document.createElement('div');
             row2.setAttribute('class','row');
             row2.innerHTML = text;
-            scans.insertBefore(row1, scans.firstChild);
+           scans.insertBefore(row1, scans.firstChild);
             scans.insertBefore(row2, scans.firstChild);
-            selectID();
+           selectID();
         }
         </script>
   </div>
@@ -200,27 +200,7 @@ input[type=submit]:hover {
 </html>
 
 <div class="container">
-  
-<div class="row">
-      <div class="col-25">
-        <label for="kode_item">Kode Item</label>
-      </div>
-      <div class="col-75">
-    <?php echo $form->textField($model,'kode_item', array('id'=>'id_item1', 
-    )); ?>
-      </div>
-    </div>
-
-  <div class="row">
-       <div class="col-md-4 col-lg-2">
-    <a id="scanBtn" type="button" class=" btn btn-success btn-sm btn-block "
-        onclick="bridgeit.scan('scanBtn','onAfterCaptureScan');">Scan a Code</a>
-      </div>
-   </div>
-
-  
-
-
+        
    <div class="row">
       <div class="col-25">
         <label for="id_item">Nama Item</label>
@@ -240,7 +220,8 @@ input[type=submit]:hover {
               brand: $("#Pencatatan_id_item").val()
             },
             success: function (data) {
-              response(data);
+               response(data);
+               
             }
           })
         }',
@@ -249,43 +230,115 @@ input[type=submit]:hover {
         'options'=>array(
           'minLength'=>'1',
           'focus'=> 'js:function( event, ui ) {
-            $("#'.CHtml::activeId($model,'id_item').'").val(ui.item.label);
+            $( "#Pencatatan_id_item" ).val( ui.item.label );
             return false;
+          
           }',
           'search'=>"js: function(event, ui) {
-            $('#Pencatatan_id_item').val('');
+            $('#Pencatatan_id_item').val();
+       
+          
           }",
-          'select'=>'js:function( event, ui ) {
-            $("#'.CHtml::activeId($model,'id_item').'").val(ui.item.id);
+          'select'=>'js:function( event, data ) {
+           
+            $(\'#kode_item\').val(data.item.kode_item);
+            $(\'#Pencatatan_id_item\').val(data.item.id_item);
+           
           }', 
+          
         ),
       ));
       ?> 
-     <?php echo $form->hiddenField($model,'id_item', array('id'=>'id_item')); ?>
+  
       </div>
     </div>
+    <br>
+  <div class="row">
+       <div class="col-md-4 col-lg-2">
+    <a id="scanBtn" type="button" class=" btn btn-success btn-sm btn-block "
+        onclick="bridgeit.scan('scanBtn','onAfterCaptureScan');">Scan a Code</a>
+      </div>
+   </div>
+
+
+    <div class="row">
+          <div class="col-25">
+            <label for="id_item">Kode Item</label>
+          </div>
+          <div class="col-75">
+                <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+            'name'=>'kode_item',
+            'attribute' => 'id_item',
+          'id'=>'kode_item',
+            'value'=>$model->id_item ? $model->item->kode_item:'',
+            'source'=>'js: function(request, response) {
+              $.ajax({
+                url: "'.$this->createUrl('Pencatatan/carikode').'",
+                dataType: "json",
+                data: {
+                  term: request.term,
+                  brand: $("#Pencatatan_id_item").val()
+                },
+                success: function (data) {
+                  response(data);
+                },
+              })
+            }',
+            //'sourceUrl' => array('carianggota'),
+            //'source'=>$this->createUrl('kegiatan/carianggota'),
+            'options'=>array(
+              'minLength'=>'1',
+              'focus'=> 'js:function( event, ui ) {
+                $( "#Pencatatan_id_item" ).val( ui.item.label );
+                return false;
+              
+              }',
+              'search'=>"js: function(event, ui) {
+                $('#Pencatatan_id_item').val();
+              }",
+              'select'=>'js:function( event, data ) {
+          
+                //ngesave id item
+                $(\'#Pencatatan_id_item\').val(data.item.id_item);     
+                $(\'#nama_item\').val(data.item.nama_item);
+                  
+              }',   
+              
+            ),
+          ));
+          ?> 
+          </div>
+        </div>
+            
+        <div class="row">
+              <div class="col-25">
+                <label for="id_item1">Id Item</label>
+              </div>
+              <div class="col-75">
+            <?php echo $form->textField($model,'id_item'); ?>
+              </div>
+            </div>
+
+
+  
+
+
 
   <script type = "text/javascript">
   function selectID(){
-    var data = "id_item="+$('#id_item1').val();
+    var data = "id_item="+$('#Pencatatan_id_item').val();
    //alert(data);
-
     jQuery.ajax({
       'type':'GET',
       'url':'<?php echo CController::createUrl('Pencatatan/pilihID');?>',
       'data': data,
       'success': function(data){
            $('#nama_item').val(data.nama_item);
-        // $( 'select#Pencatatan_id_item ' ).val(data.nama_item);
-          //  $('#Pencatatan_id_item').change(function() {
-          //   var selected  = $(this).val(); 
-          //   var textValue = $this.text();
-          // });
-          
            $('#id_item').val(data.id_item);
+           $('#kode_item').val(data.kode_item);
           //  console.log(data.nama_item);
           //  console.log(data.id_item);
-       // alert(data.nama_item);
+        //alert(data.nama_item);
 
       },
       'error':function(data){
@@ -296,33 +349,30 @@ input[type=submit]:hover {
   </script>
 
 
+<div class="row">
+		<div class="col-25">
+			<label for="id_dtl_item">Batch Number</label>
+		</div>
+		<div class="col-25">
+		<?php 
+			$this->widget('ext.select2.ESelect2',array(
+			'model'=>$model,
+			'attribute'=>'id_dtl_item',
+			'data'=>CHtml::listData(
+			DtlItem::model()->findAll(), 'id_dtl_item', 'batch'),
 
-
-
-    <div class="row">
-      <div class="col-25">
-        <label for="id_dtl_item">Batch Number</label>
-      </div>
-      <div class="col-75">
-    <?php  $this->widget('ext.select2.ESelect2',array(
-      'model'=>$model,
-      'attribute'=>'id_dtl_item',
-      'data'=>CHtml::listData(
-        DtlItem::model()->findAll(), 'id_dtl_item', 'batch'),
-
-      'options'=>array(
-		'placeholder'=>'Pilih Batch Number',
-		'allowClear'=>true,
-	  ),
-	'htmlOptions'=>array(						
-		'options'=>array(''=>array('value'=>null,'selected'=>null),
-		),
-	),		
-    )); 
-    ?>
-    
-      </div>
-    </div>
+			'options'=>array(
+			'placeholder'=>'Pilih Batch Number',
+			'allowClear'=>true,
+			),
+			'htmlOptions'=>array(						
+			'options'=>array(''=>array('value'=>null,'selected'=>null),
+			),
+			),		
+			)); 
+		?>
+		</div>
+		</div>
 
     <div class="row">
       <div class="col-25">
@@ -332,6 +382,7 @@ input[type=submit]:hover {
 	  <?php echo $form->textField($model,'stok_tempat'); ?>
       </div>
     </div>
+    <br>
 
     <div class="row">
      <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?> 
@@ -339,6 +390,7 @@ input[type=submit]:hover {
 
     <?php $this->endWidget(); ?>
   </form>
+
 
   
 </div>

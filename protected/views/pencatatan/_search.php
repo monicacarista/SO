@@ -31,10 +31,7 @@
 		<?php echo $form->textField($model,'id_item'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'kode_item'); ?>
-		<?php echo $form->textField($model,'kode_item'); ?>
-	</div>
+	
 
 
 	<div class="row">
