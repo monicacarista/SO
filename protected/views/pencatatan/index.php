@@ -29,10 +29,7 @@ $this->breadcrumbs=array(
             <a href="create" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Tambah</a>
 		</div>';
 		
-		echo '<div class="float-lg-right p-2">
-        
-            <a href="admin" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Manage</a>
-		</div>';
+	
 		
 		} else {
 
@@ -75,8 +72,9 @@ $this->breadcrumbs=array(
 		),
 		
 		'stok_tempat',
-	
+		
 	),
+	
 )); ?>
 
         </div>

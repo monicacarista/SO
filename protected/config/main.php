@@ -22,7 +22,9 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.extensions.fpdf.*',
-		'application.vendors.mpdf.*'
+		'application.vendors.mpdf.*',
+		'application.modules.rights.*',
+		'application.modules.rights.components.*',
 
 	),
 
@@ -42,6 +44,9 @@ return array(
 		'ipFilters'=>array('127.0.0.1','::1'),
 		
 		),
+		'rights'=>array(
+			'install'=>true, // Whether to enable installer. (Ubah jadi false kalau sudah selesai install)
+		  ),
 		),
 
 	// application components
@@ -85,48 +90,21 @@ return array(
 			),
 		),
 
-// 'widgetFactory' => array(
-// 	'widgets' => array(
-// 		'CLinkPager' => array(
-// 			'htmlOptions' => array(
-// 			//'class' => 'pagination'
-// 			),
-// 			'header' => false,
-// 			'maxButtonCount' => 10,
-// 		//'cssFile' => false,
-// 		),
-// 		'CGridView' => array(
-// 			'htmlOptions' => array(
-// 			//	'class' => 'items table-responsive'
-// 			),
-// 			//'pagerCssClass' => 'dataTables_paginate paging_bootstrap',
-// 			//'itemsCssClass' => 'items table-hover table-responsive table-custom',
-// 			'emptyText' => ' Tidak ada data ',
-// 			//'cssFile' => false,
-// 			//'summaryCssClass' => 'dataTables_info',
-// 			'summaryText' => 'Data {start} - {end} dari {count} data',
-// 			'template' => '<div class="row"><div class="col-md-15 col-sm-15">{summary}</div><br>
-// 									 {items}<div class="col-md-10 col-sm-10">{pager}</div></div><br />',
-// 			'pager' => array(
-// 				//'class'          => 'CLinkPager',
-// 				'header' => '',
-// 				'firstPageLabel' => '<<',
-// 				'prevPageLabel' => '<',
-// 				'nextPageLabel' => '>',
-// 				'lastPageLabel' => '>>',
-// 			),
-// 		),
-// 	),
-// ),
-		//...
-	
-	//...
+
 		'user'=>array(
 			// enable cookie-based authentication
-			'allowAutoLogin'=>true,
+			// 'class'=>'RWebUser', // Allows super users access implicitly.
+			 'allowAutoLogin'=>true,
 			'class'=>'WebUser',
+
+
 		),
 
+		'authManager'=>array(
+			'class'=>'RDbAuthManager',
+			'connectionID'=>'db',
+			'defaultRoles'=>array('Authenticated', 'Guest'),
+		 ),
 		// 'session' => array (
 		// 	'class' => 'system.web.CDbHttpSession',
 		// 	'connectionID' => 'db',

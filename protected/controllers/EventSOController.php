@@ -32,13 +32,22 @@ class EventSOController extends Controller
 				'actions'=>array('login'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','index','view'),
-				'users'=>array('@'),
+			// array('allow', // allow authenticated user to perform 'create' and 'update' actions
+			// 	'actions'=>array('create','update','index','view'),
+			// 	'users'=>array('@'),
+			// ),
+
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','create','delete','report1','report','PDF','tes','PDF2','getPDF2','export','tampil','reportSelisih','perso'),
+				'roles'=>array('admin'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','report1','report','PDF','tes','PDF2','getPDF2','export','tampil','reportSelisih','perso'),
-				'users'=>array('admin'),
+			'actions'=>array('index'),
+			'roles'=>array('staff'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			'actions'=>array('index','view'),
+			'roles'=>array('apoteker'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -67,15 +76,14 @@ class EventSOController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		
+	
 		if(isset($_POST['EventSO']))
 		{
 			
 			$model->attributes=$_POST['EventSO'];
 			if($model->save())
 			//Yii::app()->user->setState('id_so', $model->id_so);
-				$this->redirect(array('view','id'=>$model->id_so));
+				$this->redirect(array('index','id'=>$model->id_so));
 		}
 
 		$this->render('create',array(

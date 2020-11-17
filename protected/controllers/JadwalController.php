@@ -15,7 +15,7 @@ class JadwalController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+	//	'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -28,16 +28,24 @@ class JadwalController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('login'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','create','update'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
+			// array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			// 	'actions'=>array('admin','delete'),
+			// 	'users'=>array('admin'),
+			// ),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('create','admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('admin'),
+				'roles'=>array('staff'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','delete'),
+				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -70,8 +78,9 @@ class JadwalController extends Controller
 		if(isset($_POST['Jadwal']))
 		{
 			$model->attributes=$_POST['Jadwal'];
+			$model->id_so=Yii::app()->user->getState('id_so');
 			if($model->save())
-				$this->redirect(array('index','id'=>$model->id_jadwal));
+				$this->redirect(array('admin','id'=>$model->id_jadwal));
 		}
 
 		$this->render('create',array(
@@ -128,21 +137,31 @@ class JadwalController extends Controller
 		));
 	}
 
+	
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
+	public function actionAdmin($id)
 	{
+
+		//$dataProvider3=Pencatatan::model()->getpembagian();
+	
+
 		$model=new Jadwal('search');
+		Yii::app()->user->setState('id_so',$id);
+		
 		$model->unsetAttributes();  // clear any default values
+		$model->id_so=$id;
 		if(isset($_GET['Jadwal']))
 			$model->attributes=$_GET['Jadwal'];
 
 		$this->render('admin',array(
 			'model'=>$model,
 		));
-	}
+		// $this->render('admin', array(
+		// 	'dataProvider3'=>$dataProvider3));
 
+	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -158,14 +177,43 @@ class JadwalController extends Controller
 		return $model;
 	}
 
-	public function getIdApoteker($id_apoteker) {
-		$model= Apoteker::model()->findByPk($id_apoteker);
+	public function getIdStaff($id) {
+		$model= User::model()->findByPk($id);
 		if($model!=null)
 		{
-			return $model->nama_apoteker;
+			return $model->username;
 		}
 		return "";
 	}
+	public function getPeriode($id_so) {
+		$model= EventSO::model()->findByPk($id_so);
+		if($model!=null)
+		{
+			return $model->periodeSO;
+		}
+		return "";
+	}
+
+	public function getItem($id_item) {
+		$model= Item::model()->findByPk($id_item);
+		if($model!=null)
+		{
+			return $model->nama_item;
+		}
+		return "";
+	}
+
+
+	public function getRak($id_item) {
+		$model= Item::model()->findByPk($id_item);
+		if($model!=null)
+		{
+			return $model->lokasi_rak;
+		}
+		return "";
+	}
+
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param Jadwal $model the model to be validated

@@ -32,11 +32,11 @@ class PencatatanController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','admin','view','create','update','pilihID','caribatch','Autocomplete','cariitem','carikode','usersAutoComplete'),
+				'actions'=>array('index','admin','beforeSave','view','create','update','getBN','SO','pilihID','caribatch','Autocomplete','cariitem','carikode','usersAutoComplete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','perso','report1','delete','report','PDF2','PDF','reportItem'),
+				'actions'=>array('admin','perso','report1','delete','report','PDF2','PDF','PDF3','reportItem'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -61,8 +61,9 @@ class PencatatanController extends Controller
 public function actionCaribatch() 
 {
    $res =array();
+   
    if (isset($_GET['term'])) {
-     $qtxt ="SELECT batch as label, id_dtl_item FROM tbl_dtl_item WHERE batch LIKE :name ";
+     $qtxt ="SELECT batch as label, id_dtl_item FROM tbl_dtl_item WHERE batch LIKE :name  ";
      $command =Yii::app()->db->createCommand($qtxt);
 	 $command->bindValue(":name", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 	 
@@ -71,11 +72,32 @@ public function actionCaribatch()
    echo CJSON::encode($res);
 }
 
+public function actionPilihID(){
+	$id_item = $_GET["id_item"];
+	$nama = Yii::app()->db->createCommand()
+						->select('*')
+						->from('tbl_item','tbl_dtl_item')
+						->where('id_item=:id_item',array(':id_item'=>$id_item))
+						->queryRow();
+	
+	echo CJSON::encode(array(
+		'error'=>'false',
+		'nama_item'=>$nama["nama_item"],
+		'id_item'=>$nama["id_item"],
+		'kode_item'=>$nama["kode_item"],
+		'batch'=>$nama["batch"],
+		
+	
+	));
+	Yii::app()->end();
+}
+
+
 public function actionCarikode() 
 {
 	$res =array();
 	if (isset($_GET['term'])) {
-	  $qtxt ="SELECT kode_item as label, id_item, nama_item FROM tbl_item WHERE kode_item LIKE :name ";
+	  $qtxt ="SELECT kode_item as label, id_item, nama_item, i.batch FROM tbl_item, tbl_dtl_item i WHERE kode_item LIKE :name ";
 	  $command =Yii::app()->db->createCommand($qtxt);
 	  $command->bindValue(":name", '%'.$_GET['term'].'%', PDO::PARAM_STR);
 	  
@@ -110,17 +132,41 @@ public function actionCarikode()
 		if(isset($_POST['Pencatatan']))
 		{
 			$model->attributes=$_POST['Pencatatan'];
-			$model->id_so=Yii::app()->user->getState('id_so');
+			$model->id_so=Yii::app()->user->getState('id_dtl_jadwal');
+
+			// $model->unsetAttributes();  // clear any default values
+			// $model->id_so=$id;
 		//	$id=Yii::app()->user->getState('id_so'); //it is better to check it via has state, and also passing a default value 
 			if($model->save())
-			
-				$this->redirect(array('view','id'=>$model->id_pencatatan));
+		//	$model->id_item=$this->beforeSave();
+				$this->redirect(array('admin','id'=>$model->id_pencatatan));
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
 	}
+
+	public function actionUpdate($id)
+	{
+		$model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Pencatatan']))
+		{
+			$model->attributes=$_POST['Pencatatan'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id_pencatatan));
+		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
+
+
 
 	public function actionAutocomplete(){
 		$res = array();
@@ -142,25 +188,7 @@ public function actionCarikode()
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Pencatatan']))
-		{
-			$model->attributes=$_POST['Pencatatan'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_pencatatan));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-
+	
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -193,16 +221,50 @@ public function actionCarikode()
 	 */
 	public function actionAdmin($id)
 	{
+
+		//$dataProvider3=Pencatatan::model()->getpembagian();
+	
+
 		$model=new Pencatatan('search');
-		Yii::app()->user->setState('id_so',$id);
+		Yii::app()->user->setState('id_jadwal',$id);
 		$model->unsetAttributes();  // clear any default values
-		$model->id_so=$id;
+		$model->id_jadwal=$id;
+		$catat=$this->getItem($id);
 		if(isset($_GET['Pencatatan']))
 			$model->attributes=$_GET['Pencatatan'];
 
 		$this->render('admin',array(
 			'model'=>$model,
+			'catat'=>$catat,
+			
 		));
+		// $this->render('admin', array(
+		// 	'dataProvider3'=>$dataProvider3));
+
+	}
+
+	
+
+	public function actionSO()
+	{
+		//$model=new Pencatatan('pembagian');
+		//Yii::app()->user->setState('id_jadwal',$id);
+		
+		//$model->unsetAttributes();  // clear any default values
+		//$model->id_jadwal=$id;
+		//if(isset($_GET['Pencatatan']))
+		//	$model->attributes=$_GET['Pencatatan'];
+
+	//	$this->render('SO',array(
+		//	'model'=>$model,
+		//));
+
+		$model=new Pencatatan();
+	
+		
+		$dataProvider3=Pencatatan::model()->getpembagian();
+		$this->render('SO', array(
+			'dataProvider3'=>$dataProvider3));
 	}
 
 	/**
@@ -229,6 +291,15 @@ public function actionCarikode()
 		return "";
 	}
 
+	public function getApoteker($id_apoteker) {
+		$model= Apoteker::model()->findByPk($id_apoteker);
+		if($model!=null)
+		{
+			return $model->nama_apoteker;
+		}
+		return "";
+	}
+
 	public function getItem($id_item) {
 		$model= Item::model()->findByPk($id_item);
 		if($model!=null)
@@ -237,6 +308,26 @@ public function actionCarikode()
 		}
 		return "";
 	}
+
+	public function getSatuan($id_item) {
+		$model= Item::model()->findByPk($id_item);
+		if($model!=null)
+		{
+			return $model->satuan;
+		}
+		return "";
+	}
+	public function getRak($id_jadwal) {
+		$model= Jadwal::model()->findByPk($id_jadwal);
+		if($model!=null)
+		{
+			return $model->lokasi_rak;
+		}
+		return "";
+	}
+
+
+
 	public function actionUsersAutocomplete() {
 		$term = trim($_GET['term']) ;
 
@@ -248,6 +339,7 @@ public function actionCarikode()
     }
   }
 
+ 
   public function actionPDF2()
 	{
 	require_once 'C:\xampp\htdocs\SO\vendor\autoload.php' ;
@@ -258,6 +350,20 @@ public function actionCarikode()
 	// 	// // //Write some HTML code:
 	$mPDF1->WriteHTML($this->renderPartial('report',array(
 		'dataProvider1' => $dataProvider1), true));
+
+	$mPDF1->Output($nama,'I');
+	}
+
+	public function actionPDF3()
+	{
+	require_once 'C:\xampp\htdocs\SO\vendor\autoload.php' ;
+	$mPDF1 = new \Mpdf\Mpdf();
+	$nama='Report Barang Expired';
+	$dataProvider2=Pencatatan::model()->getItemReport();
+	// 	 ///////
+	// 	// // //Write some HTML code:
+	$mPDF1->WriteHTML($this->renderPartial('reportItem',array(
+		'dataProvider2' => $dataProvider2), true));
 
 	$mPDF1->Output($nama,'I');
 	}
@@ -317,24 +423,19 @@ public function actionCarikode()
 
 
 
-	public function actionPilihID(){
+	public function actiongetBN(){
 		$id_item = $_GET["id_item"];
-		$nama = Yii::app()->db->createCommand()
+		$sql = Yii::app()->db->createCommand()
 							->select('*')
-							->from('tbl_item')
+							->from('tbl_dtl_item')
 							->where('id_item=:id_item',array(':id_item'=>$id_item))
 							->queryRow();
 		
-		echo CJSON::encode(array(
-			'error'=>'false',
-			'nama_item'=>$nama["nama_item"],
-			'id_item'=>$nama["id_item"],
-			'kode_item'=>$nama["kode_item"],
-			
-		
-		));
-		Yii::app()->end();
+
+
 	}
+
+
 
 	public function actionAutoCompleteAjax()
 	{
@@ -347,6 +448,8 @@ public function actionCarikode()
 			}
 		}
 	}
+
+	
 
 	/**
 	 * Performs the AJAX validation.

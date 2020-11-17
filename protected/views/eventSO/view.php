@@ -15,8 +15,8 @@ $this->breadcrumbs=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id_so',
-		'id_apotek',
 		'id_apoteker',
+		'periodeSO',
 		'tgl_mulai',
 		'tgl_berakhir',
 	),

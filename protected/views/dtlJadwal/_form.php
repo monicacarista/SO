@@ -69,16 +69,14 @@ input[type=submit]:hover {
 </style>
 </head>
 <body>
-
-
 <?php
-/* @var $this PencatatanController */
-/* @var $model Pencatatan */
+/* @var $this EventSOController */
+/* @var $model EventSO */
 /* @var $form CActiveForm */
 ?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'pencatatan-form',
+	'id'=>'event-so-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -86,63 +84,32 @@ input[type=submit]:hover {
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model); ?>
+<p class="note">Fields with <span class="required">*</span> are required.</p>
 
- 
+<?php echo $form->errorSummary($model); ?>
+
 <div class="container">
+
+
+
   
 <div class="row">
       <div class="col-25">
-        <label for="kode_item">Kode Item</label>
+        <label for="id">Nama Staff</label>
       </div>
       <div class="col-75">
-    <?php echo $form->textField($model,'kode_item', array('id'=>'id_item1', 
-    )); ?>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-25">
-        <label for="id_item">Pilih Item</label>
-      </div>
-      <div class="col-75">
-    <?php 
+      <?php 
     $this->widget('ext.select2.ESelect2',array(
       'model'=>$model,
-      'attribute'=>'id_item',
-      'id'=>'nama_item',
+      'attribute'=>'id',
       'data'=>CHtml::listData(
-        Item::model()->findAll(), 'id_item', 'nama_item'),
+        User::model()->findAll(array("condition"=>"id>1")), 'id', 'username'),
 
       'options'=>array(
-		'placeholder'=>'Pilih Item',
+		'placeholder'=>'Pilih Staff',
 		'allowClear'=>true,
-	  ),
-    )); 
-    ?>
-  
-      </div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-25">
-        <label for="id_dtl_item">Batch Number</label>
-      </div>
-      <div class="col-75">
-    <?php 
-    $this->widget('ext.select2.ESelect2',array(
-      'model'=>$model,
-      'attribute'=>'id_dtl_item',
-      'data'=>CHtml::listData(
-        DtlItem::model()->findAll(), 'id_dtl_item', 'batch'),
-
-      'options'=>array(
-		'placeholder'=>'Pilih Batch Number',
-		'allowClear'=>true,
-	  ),
+	),
 	'htmlOptions'=>array(						
 		'options'=>array(''=>array('value'=>null,'selected'=>null),
 		),
@@ -152,28 +119,48 @@ input[type=submit]:hover {
       </div>
     </div>
 
+	
   
-
-
-
-    <div class="row">
+<div class="row">
       <div class="col-25">
-        <label for="stok_tempat">Stok</label>
+        <label for="id_item">Rak</label>
       </div>
       <div class="col-75">
-	  <?php echo $form->textField($model,'stok_tempat'); ?>
+      <?php 
+    $this->widget('ext.select2.ESelect2',array(
+      'model'=>$model,
+      'attribute'=>'id_item',
+      'data'=>CHtml::listData(
+        Item::model()->findAll(), 'id_item', 'lokasi_rak'),
+
+      'options'=>array(
+		'placeholder'=>'Pilih Rak',
+		'allowClear'=>true,
+	),
+	'htmlOptions'=>array(						
+		'options'=>array(''=>array('value'=>null,'selected'=>null),
+		),
+	),		
+    )); 
+    ?>
       </div>
     </div>
+    
 
+    
+	
+    <br>
+
+    
     <div class="row">
-     <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?> 
- 
+    
+    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
-
+    
 <?php $this->endWidget(); ?>
   </form>
-
-  
 </div>
 
 </body>
+</html>
+

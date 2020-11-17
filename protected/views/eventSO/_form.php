@@ -90,32 +90,10 @@ input[type=submit]:hover {
 <?php echo $form->errorSummary($model); ?>
 
 <div class="container">
-    <div class="row">
-      <div class="col-25">
-        <label for="id_apoteker">Apoteker</label>
-      </div>
-      <div class="col-75">
-      <?php 
-    $this->widget('ext.select2.ESelect2',array(
-      'model'=>$model,
-      'attribute'=>'id_apoteker',
-      'data'=>CHtml::listData(
-        Apoteker::model()->findAll(), 'id_apoteker', 'nama_apoteker'),
-
-      'options'=>array(
-		'placeholder'=>'Pilih Apoteker',
-		'allowClear'=>true,
-	),
-	'htmlOptions'=>array(						
-		'options'=>array(					  								        ''=>array('value'=>null,'selected'=>null),
-		),
-	),		
-    )); 
-    ?>
-      </div>
-    </div>
 
 
+
+   
     <div class="row">
       <div class="col-25">
         <label for="tgl_mulai">Tanggal Mulai</label>
@@ -124,12 +102,18 @@ input[type=submit]:hover {
       <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
          'name' => 'tgl_mulai',
          'attribute' => 'tgl_mulai',
+         'flat' => true,
          'model'=>$model,
          'options'=> array(
              'dateFormat' =>'yy-mm-dd',
              'altFormat' =>'yy-mm-dd',
+            
+        'changeMonth' => true,
+        'changeYear' => true
+            
          ),
      )); 
+   
      ?> 
       </div>
     </div>
@@ -142,11 +126,16 @@ input[type=submit]:hover {
       <div class="col-25">
       <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
          'name' => 'tgl_berakhir',
+         'flat' => true,
          'attribute' => 'tgl_berakhir',
          'model'=>$model,
          'options'=> array(
              'dateFormat' =>'yy-mm-dd',
              'altFormat' =>'yy-mm-dd',
+             
+        'changeMonth' => true,
+        'changeYear' => true
+            
          ),
      )); 
      ?>

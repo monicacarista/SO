@@ -221,7 +221,7 @@ input[type=submit]:hover {
             },
             success: function (data) {
                response(data);
-               
+               console.log(data);
             }
           })
         }',
@@ -240,10 +240,11 @@ input[type=submit]:hover {
           
           }",
           'select'=>'js:function( event, data ) {
-           
+           console.log(data);
             $(\'#kode_item\').val(data.item.kode_item);
             $(\'#Pencatatan_id_item\').val(data.item.id_item);
-           
+         
+            
           }', 
           
         ),
@@ -336,6 +337,7 @@ input[type=submit]:hover {
            $('#nama_item').val(data.nama_item);
            $('#id_item').val(data.id_item);
            $('#kode_item').val(data.kode_item);
+
           //  console.log(data.nama_item);
           //  console.log(data.id_item);
         //alert(data.nama_item);
@@ -349,6 +351,7 @@ input[type=submit]:hover {
   </script>
 
 
+
 <div class="row">
 		<div class="col-25">
 			<label for="id_dtl_item">Batch Number</label>
@@ -359,7 +362,9 @@ input[type=submit]:hover {
 			'model'=>$model,
 			'attribute'=>'id_dtl_item',
 			'data'=>CHtml::listData(
-			DtlItem::model()->findAll(), 'id_dtl_item', 'batch'),
+			DtlItem::model( )->findAll(array(
+
+      'params'    => array('condition'=>'id_item =  :id'))), 'id_dtl_item', 'batch'),
 
 			'options'=>array(
 			'placeholder'=>'Pilih Batch Number',
@@ -372,8 +377,7 @@ input[type=submit]:hover {
 			)); 
 		?>
 		</div>
-		</div>
-
+		</div> 
     <div class="row">
       <div class="col-25">
         <label for="stok_tempat">Stok</label>
@@ -384,9 +388,14 @@ input[type=submit]:hover {
     </div>
     <br>
 
+   
+
+
     <div class="row">
-     <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?> 
+     <?php echo CHtml::submitButton( 'Save'); ?> 
     </div>
+
+
 
     <?php $this->endWidget(); ?>
   </form>

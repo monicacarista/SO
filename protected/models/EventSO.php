@@ -30,8 +30,9 @@ class EventSO extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_apoteker, tgl_mulai, tgl_berakhir', 'required'),
-			array('id_apotek, id_apoteker, total_selisih_item', 'numerical', 'integerOnly'=>true),
+			array(' tgl_mulai, tgl_berakhir', 'required'),
+			array('  total_selisih_item', 'numerical', 'integerOnly'=>true),
+			array('periodeSO', 'length', 'max'=>150),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_so, id_apotek, id_apoteker, tgl_mulai, tgl_berakhir, periodeSO, total_selisih_item', 'safe', 'on'=>'search'),

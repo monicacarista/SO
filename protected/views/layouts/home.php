@@ -115,10 +115,9 @@ body {margin:0;font-family:Arial}
 <div class="topnav" id="myTopnav">
   <a href="/SO/index.php" >Home</a>
   <a href="/SO/index.php/eventSO/index">Event SO</a>
-  <a href="/SO/index.php/jadwal/index">Jadwal SO</a>
   <a href="/SO/index.php/item/index">Item</a>
   <a href="/SO/index.php/dtlItem/index">Detail Item</a>
-  
+  <a href="/SO/index.php/pencatatan/report">Report</a>
   <?php if (Yii::app()->user->isGuest()) {
 
     //tampilin menu login 

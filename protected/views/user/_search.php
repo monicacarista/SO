@@ -37,18 +37,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'role'); ?>
-		<?php echo $form->textField($model,'role',array('size'=>15,'maxlength'=>15)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'sPass'); ?>
-		<?php echo $form->textField($model,'sPass',array('size'=>50,'maxlength'=>50)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'isActive'); ?>
-		<?php echo $form->textField($model,'isActive'); ?>
+		<?php echo $form->label($model,'roles'); ?>
+		<?php echo $form->textField($model,'roles',array('size'=>15,'maxlength'=>15)); ?>
 	</div>
 
 	<div class="row buttons">

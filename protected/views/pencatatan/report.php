@@ -89,7 +89,7 @@ $this->breadcrumbs=array(
 		array(
 			'name'=>'Selisih Total Item',
 			'type'=>'raw',
-			'value'=>'Yii::app()->numberFormatter->format("Rp ###,###,###",$data["ttl_selisih_item"])',
+			'value'=>'$data["ttl_selisih_item"]',
 		),
 		array(
 			'name'=>'Selisih Total Harga',

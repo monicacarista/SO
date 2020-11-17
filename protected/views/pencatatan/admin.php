@@ -48,7 +48,10 @@ $('.search-form form').submit(function(){
 		)); ?>
 		</div><!-- search-form -->
 
-		<?php $this->widget('zii.widgets.grid.CGridView', array(
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <?php $this->widget('zii.widgets.grid.CGridView', array(
 			'id'=>'pencatatan-grid',
 			'dataProvider'=>$model->search(),
 			'filter'=>$model,
@@ -75,9 +78,3 @@ $('.search-form form').submit(function(){
 				),
 			),
 		)); ?>
-
-        </div>
-        <!-- /.card-body -->
-    </div>
-</section>
-<!-- /.content -->  

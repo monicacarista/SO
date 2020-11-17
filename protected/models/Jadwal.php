@@ -6,7 +6,9 @@
  * The followings are the available columns in table 'tbl_jadwal':
  * @property integer $id_jadwal
  * @property integer $id_apoteker
+ *  @property integer $id_so
  * @property string $jadwal_pengecekan
+ * @property string $id_item
  */
 class Jadwal extends CActiveRecord
 {
@@ -28,9 +30,10 @@ class Jadwal extends CActiveRecord
 		return array(
 			array('id_apoteker, jadwal_pengecekan', 'required'),
 			array('id_apoteker', 'numerical', 'integerOnly'=>true),
+			array('id_item', 'length', 'max'=>150),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_jadwal, id_apoteker, jadwal_pengecekan', 'safe', 'on'=>'search'),
+			array('id_jadwal, id_so,id_apoteker, jadwal_pengecekan, id_item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,6 +45,9 @@ class Jadwal extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			
+				'tbl_item'=>array(self::HAS_MANY, 'Item', 'id_item'),
+		
 		);
 	}
 
@@ -52,8 +58,10 @@ class Jadwal extends CActiveRecord
 	{
 		return array(
 			'id_jadwal' => 'Id Jadwal',
-			'id_apoteker' => 'Id Apoteker',
+			'id_apoteker' => 'Id Staff',
+			'id_so' => 'Id SO',
 			'jadwal_pengecekan' => 'Jadwal Pengecekan',
+			'id_item' => 'Lokasi Rak',
 		);
 	}
 
@@ -76,8 +84,11 @@ class Jadwal extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_jadwal',$this->id_jadwal);
+		$criteria->compare('id_so',$this->id_so);
 		$criteria->compare('id_apoteker',$this->id_apoteker);
 		$criteria->compare('jadwal_pengecekan',$this->jadwal_pengecekan,true);
+		
+		$criteria->compare('id_item',$this->id_item,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

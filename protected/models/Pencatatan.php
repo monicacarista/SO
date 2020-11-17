@@ -10,6 +10,7 @@
  * @property integer $id_item
  * @property integer $stok_tempat
  * @property string $id_dtl_item
+ * @property integer $id_apoteker
  */
 class Pencatatan extends CActiveRecord
 {
@@ -33,10 +34,11 @@ class Pencatatan extends CActiveRecord
 			array(' id_item, stok_tempat, id_dtl_item', 'required'),
 			array('id_so, stok_tempat', 'numerical', 'integerOnly'=>true),
 			array('id_dtl_item', 'length', 'max'=>11),
+		//	array('id_dtl_item', 'unique'),
 		//	array('id_item','checkItem'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_pencatatan, id_so,id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
+			array('id_pencatatan, id, id_so,id_jadwal, id_item, stok_tempat, id_dtl_item', 'safe', 'on'=>'search'),
 		);
 	}
 // 	public function checkItem($attribute,$params)
@@ -66,6 +68,7 @@ class Pencatatan extends CActiveRecord
 	{
 		return array(
 			'id_pencatatan' => 'Id Pencatatan',
+			'id' => 'Id Apoteker',
 			'id_so' => 'Id So',
 			'id_jadwal' => 'Id Jadwal',
 			'id_item' => 'Id Item',
@@ -96,6 +99,7 @@ class Pencatatan extends CActiveRecord
 		$criteria->compare('id_so',$this->id_so);
 		$criteria->compare('id_jadwal',$this->id_jadwal,true);
 		$criteria->compare('id_item',$this->id_item);
+		$criteria->compare('id',$this->id);
 		$criteria->compare('stok_tempat',$this->stok_tempat);
 		$criteria->compare('id_dtl_item',$this->id_dtl_item,true);
 
@@ -119,7 +123,7 @@ class Pencatatan extends CActiveRecord
     
 	}
 	public function getTes(){
-		$sql2='SELECT *, (jml_stok_tem - jml_stok)as ttl_selisih_item, (jml_stok_tem - jml_stok)*harga as selisih_harga
+		$sql1='SELECT *, (jml_stok_tem - jml_stok)as ttl_selisih_item, (jml_stok_tem - jml_stok)*harga as selisih_harga
 		FROM
 		(
 		SELECT i.id_item, i.nama_item, satuan, SUM(stok) AS jml_stok, harga FROM tbl_dtl_item d
@@ -131,12 +135,12 @@ class Pencatatan extends CActiveRecord
 		LEFT JOIN tbl_item i ON i.id_item = p.id_item
 		GROUP BY i.id_item) AS yyy 
 		ON xxx.id_item = yyy.id_item
-	    WHERE  id_so =  :id 
+	    -- WHERE  id_so =  :id 
 
 		';
 
 		$dataProvider1=new CSqlDataProvider($sql1, array(
-			'params' => array(':id' =>Yii::app()->user->getState('id_so')),
+			// 'params' => array(':id' =>Yii::app()->user->getState('id_so')),
 			'keyField'=>'id_so',
 			'pagination'=>array(
 				'pageSize'=>25,
@@ -145,8 +149,61 @@ class Pencatatan extends CActiveRecord
 		return $dataProvider1;
 	}
 
+	public function beforeSave()
+
+		{
+
+			// periksa tabel dengan PK yg sama dengan yg akan ditulis
+
+			$model = Pencatatan::findByPk(array($this->id_item, $this->id_dtl_item));
+
+			if ($model)
+
+				return false; // gak jadi save karena datanya sudah ada
+
+			else
+
+				return true; // data dengan PK yg sama belum ada, maka OK untuk save
+
+
+
+
+		}
+
+
+	public function getpembagian(){
+		$sql1='SELECT tbl_item.*, tbl_dtl_item.*, tbl_jadwal.id_jadwal, tbl_jadwal.id_apoteker , nama_apoteker, lokasi_rak, stok_tempat
+		FROM tbl_item JOIN tbl_dtl_item JOIN tbl_jadwal JOIN tbl_apoteker JOIN tbl_pencatatan
+		WHERE tbl_jadwal.id_apoteker = tbl_apoteker.id_apoteker GROUP BY id_jadwal
+		';
+
+		$dataProvider3=new CSqlDataProvider($sql1, array(
+		//	'params' => array(':id' =>Yii::app()->user->getState('id_jadwal')),
+			'keyField'=>'id_item',
+			'pagination'=>array(
+				'pageSize'=>25,
+			),
+		));
+		return $dataProvider3;
+	}
+
+
+	public function getBN(){
+		$id_item = $_GET["id_item"];
+		$sql = Yii::app()->db->createCommand()
+							->select('*')
+							->from('tbl_dtl_item')
+							->where('id_item=:id_item',array(':id_item'=>$id_item))
+							->queryRow();
+		
+
+
+	}
+
 	public function getItemReport(){
-		$sql2='SELECT tbl_dtl_item.id_item , i.nama_item, i.lokasi_rak, exp_date from tbl_item i, tbl_dtl_item where exp_date < curdate() group by i.nama_item;
+		$sql2='SELECT tbl_dtl_item.id_item , i.nama_item, batch,stok,i.lokasi_rak, exp_date 
+		from tbl_item i, tbl_dtl_item 
+		where exp_date < curdate() group by i.nama_item;
 
 		';
 
@@ -173,6 +230,26 @@ class Pencatatan extends CActiveRecord
 		$criteria->condition="tbl.id_so=:id";
 		
 		$criteria->params=array(':id'=>$this->id_so);
+		$criteria->together = true; // ADDED THIS
+		$criteria->limit = 10;
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	
+	}
+	
+	public function BN()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='tbl.*, i.batch';
+		$criteria->alias='tbl';
+		$criteria->join=' JOIN tbl_dtl_item  i';
+		
+		$criteria->condition="tbl.id_item=:id";
+		
+		$criteria->params=array(':id'=>$this->id_item);
 		$criteria->together = true; // ADDED THIS
 		$criteria->limit = 10;
 

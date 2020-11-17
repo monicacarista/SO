@@ -10,16 +10,13 @@
  * @property string $email
  * @property string $first_name
  * @property string $last_name
- * @property string $role
+ * @property string $roles
  */
 class User extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
-
-	
-
 	public function tableName()
 	{
 		return 'tbl_user';
@@ -33,12 +30,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email, first_name, last_name', 'required'),
+			array('username, password, email, first_name, last_name, roles', 'required'),
 			array('username, password, email', 'length', 'max'=>128),
-			array('first_name, last_name, role', 'length', 'max'=>15),
+			array('first_name, last_name, roles', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, email, first_name, last_name, role', 'safe', 'on'=>'search'),
+			array('id, username, password, email, first_name, last_name, roles', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,7 +62,7 @@ class User extends CActiveRecord
 			'email' => 'Email',
 			'first_name' => 'First Name',
 			'last_name' => 'Last Name',
-			'role' => 'Role',
+			'roles' => 'Roles',
 		);
 	}
 
@@ -93,7 +90,7 @@ class User extends CActiveRecord
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('first_name',$this->first_name,true);
 		$criteria->compare('last_name',$this->last_name,true);
-		$criteria->compare('role',$this->role,true);
+		$criteria->compare('roles',$this->roles,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

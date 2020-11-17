@@ -41,6 +41,22 @@ class WebUser extends CWebUser {
 				$this->_model=User::model()->findByPk($id);
 		}
 		return $this->_model;
-	}
+  }
+  
+  public function checkAccess($operation, $params=array(),$allowCaching=true)
+	{
+		if (empty($this->id)) {
+			// Not identified => no rights
+			return false;
+		}
+		$role = $this->getState("roles");
+		if ($role === 'admin') {
+			return true; // admin role has access to everything
+		}
+		// allow access if the operation request is the current user's role
+		return ($operation === $role);
+  }
+  
+  
 }
 ?>

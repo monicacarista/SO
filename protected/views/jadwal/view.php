@@ -3,7 +3,7 @@
 /* @var $model Jadwal */
 
 $this->breadcrumbs=array(
-	'List Jadwal Pencatatan'=>array('index'),
+	'Jadwals'=>array('index'),
 	$model->id_jadwal,
 );
 
@@ -22,7 +22,9 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id_jadwal',
+	//	'id_so',
 		'id_apoteker',
 		'jadwal_pengecekan',
+	//	'lokasi_rak',
 	),
 )); ?>

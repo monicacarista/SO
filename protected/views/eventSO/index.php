@@ -43,11 +43,12 @@ $this->breadcrumbs=array(
         <!-- /.card-header -->
         <div class="card-body">
 		<?php if (Yii::app()->user->isAdmin()) {
-
+		
 //tampilin menu admin
 
 			 $this->widget('zii.widgets.grid.CGridView', array(
 				'id'=>'event-so-grid',
+				
 				'dataProvider'=>$dataProvider,
 
 				'columns'=>array(
@@ -60,7 +61,7 @@ $this->breadcrumbs=array(
 					'id_so',
 					array(
 						'name'=>'id_apoteker',
-						'header'=>'Nama Apoteker',
+						'header'=>'Nama Staff',
 						'value'=>'$this->grid->getController()->getIdApoteker($data->id_apoteker)'
 					),
 					'tgl_mulai',
@@ -73,16 +74,12 @@ $this->breadcrumbs=array(
 						'value' =>
 						
 					
-						'(CHtml::link("<i class=\"fa fa-eye fa-lg\" style=\"color:#333333;\"></i> Detail",
-								Yii::app()->request->baseUrl."/pencatatan/admin/".$data->id_so,
+						'(CHtml::link("<i class=\"fa fa-eye fa-lg\" style=\"color:#333333;\"></i> Jadwal",
+								Yii::app()->request->baseUrl."/jadwal/admin/".$data->id_so,
 								array("class"=>"btn btn-mini", "style"=>"color:#333333;  margin-bottom:3px; margin-right:5px;"))).
 
-
-								(CHtml::link("<i class=\"fa fa-file fa-lg\" style=\"margin-top:3px;\"></i> Report",
-								Yii::app()->request->baseUrl."/pencatatan/report/".$data->id_so, 
-								array("class"=>"btn btn-mini", "style"=>"color:#333333; margin-bottom:3px; margin-right:5px;"))).
-
-							
+						
+								
 						(CHtml::link("<i class=\"fa fa-trash fa-lg\" style=\"margin-top:3px;\"></i> Delete",
 								Yii::app()->request->baseUrl."/eventSO/delete/".$data->id_so,
 								array("class"=>"btn btn-mini btn-danger", "style"=>"color:#efefef; margin-bottom:3px; margin-right:5px;", 
@@ -123,10 +120,10 @@ $this->breadcrumbs=array(
 					'type' =>'raw',
 					'value' =>
 					
-				
-					'(CHtml::link("<i class=\"fa fa-eye fa-lg\" style=\"color:#333333;\"></i> Detail",
-							Yii::app()->request->baseUrl."/pencatatan/admin/".$data->id_so,
-							array("class"=>"btn btn-mini", "style"=>"color:#333333;  margin-bottom:3px; margin-right:5px;")));',
+					'(CHtml::link("<i class=\"fa fa-eye fa-lg\" style=\"color:#333333;\"></i> Jadwal",
+					Yii::app()->request->baseUrl."/jadwal/admin/".$data->id_so,
+					array("class"=>"btn btn-mini", "style"=>"color:#333333;  margin-bottom:3px; margin-right:5px;")));',
+
 
 
 					'htmlOptions'=>array('width'=>'200px', 'style'=>'text-align:center;')

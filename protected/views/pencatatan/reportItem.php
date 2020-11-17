@@ -19,6 +19,10 @@ $this->breadcrumbs=array(
             <!-- <i class="fas fa-bullhorn"></i> -->
             Report Item Kadarluarsa
         </h3>
+		<div class="float-lg-right p-2">
+        
+            <a href="/SO/pencatatan/PDF3" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Export .pdf</a>
+		</div>
 		
 
 
@@ -34,7 +38,17 @@ $this->breadcrumbs=array(
 	'dataProvider'=>$dataProvider2,
 'columns'=>array(
    
-      
+		array('name'=>'no',
+		'type'=>'raw',
+		'header' => 'No ',		
+		'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+		'filter' => '',		
+		),
+		array(
+			'name'=>'Batch Number',
+			'type'=>'raw',
+			'value'=>'$data["batch"]',
+		),
 		array(
 			'name'=>'Nama Item ',
 			'type'=>'raw',
@@ -50,6 +64,12 @@ $this->breadcrumbs=array(
 			'type'=>'raw',
 			'value'=>'$data["lokasi_rak"]',
 		),
+		array(
+			'name'=>'Stok',
+			'type'=>'raw',
+			'value'=>'$data["stok"]',
+		),
+		
 		
 
 		
